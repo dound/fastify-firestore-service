@@ -22,6 +22,6 @@ export default class ComponentRegistrator {
   }
 
   async registerModel (model) {
-    await model.createResources()
+    // nothing to do here
   }
 }
