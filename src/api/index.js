@@ -1,11 +1,11 @@
-const api = require('./api')
-const EXCEPTIONS = require('./exception')
-const RESPONSES = require('./response')
-const txAPI = require('./tx-api')
+import API from './api'
+import * as EXCEPTIONS from './exception'
+import RESPONSES from './response'
+import TxAPI from './tx-api'
 
-module.exports = {
-  ...api,
-  ...txAPI,
+export {
+  API,
+  TxAPI,
   EXCEPTIONS,
   RESPONSES
 }

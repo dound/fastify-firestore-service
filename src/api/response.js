@@ -1,6 +1,8 @@
-const S = require('@pocketgems/schema')
+import S from '@pocketgems/schema'
 
-module.exports = {
+const RESPONSES = {
   NO_OUTPUT: S.str.max(0).lock(),
   UNVALIDATED: undefined
 }
+
+export default RESPONSES

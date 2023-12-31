@@ -1,8 +1,8 @@
-const assert = require('assert')
+import assert from 'node:assert'
 
-const S = require('@pocketgems/schema')
+import S from '@pocketgems/schema'
 
-const RESPONSES = require('./response')
+import RESPONSES from './response'
 
 /**
  * @namespace Exceptions
@@ -260,7 +260,7 @@ class ServiceUnavailableException extends RequestError {
   static STATUS = 503
 }
 
-module.exports = {
+export {
   // Base exceptions
   RequestError,
   RequestDone,

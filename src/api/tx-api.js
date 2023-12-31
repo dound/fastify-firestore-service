@@ -1,6 +1,6 @@
-const db = require('firestoredb')
+import db from 'firestoredb'
 
-const { API } = require('./api')
+import API from './api'
 
 /**
  * Thrown to avoid committing a transaction when an error occurs.
@@ -19,7 +19,7 @@ class TransactionAborted extends Error {
  * @public
  * @class
  */
-class TxAPI extends API {
+export default class TxAPI extends API {
   static IS_READ_ONLY = true
 
   async _computeResponse () {
@@ -87,5 +87,3 @@ class TxAPI extends API {
    */
   async postCommit (respData) { return respData }
 }
-
-module.exports = { TxAPI }

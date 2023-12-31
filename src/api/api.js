@@ -1,17 +1,17 @@
-const assert = require('assert')
-const querystring = require('querystring')
+import assert from 'node:assert'
+import querystring from 'node:querystring'
 
-const S = require('@pocketgems/schema')
+import S from '@pocketgems/schema'
 
-const {
+import {
   BadRequestException,
   InvalidInputException,
   InternalFailureException,
   RedirectException,
   RequestDone,
   RequestError
-} = require('./exception')
-const RESPONSES = require('./response')
+} from './exception'
+import RESPONSES from './response'
 
 /**
  * Given an object, return a new object with undefined keys removed.
@@ -54,7 +54,7 @@ function generateRegistrationOptions (api) {
  * @public
  * @class
  */
-class API {
+export default class API {
   /**
    * The API's human-readable name.
    *
@@ -814,9 +814,4 @@ enough data to fill the last page.`)
       }
     })
   }
-}
-
-module.exports = {
-  API,
-  RESPONSES
 }
