@@ -1,6 +1,6 @@
-const zlib = require('zlib')
+import zlib from 'node:zlib'
 
-const got = require('got')
+import got from 'got'
 
 module.exports = (options) => {
   options = {

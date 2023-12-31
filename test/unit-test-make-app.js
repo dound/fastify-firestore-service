@@ -1,6 +1,6 @@
-const { makeApp } = require('../src')
+import { makeApp } from '../src'
 
-const { BaseTest, runTests } = require('./base-test')
+import { BaseTest, runTests } from './base-test'
 
 class MakeAppTest extends BaseTest {
   async testValidation () {

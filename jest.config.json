@@ -26,6 +26,7 @@
     "@pocketgems/unit-test/src/custom-reporter.js",
     "@pocketgems/unit-test/src/summary-reporter.js"
   ],
+  "transform": {},
   "watchPathIgnorePatterns": ["node_modules"],
   "verbose": false,
   "noStackTrace": false

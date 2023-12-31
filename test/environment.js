@@ -1,3 +1,3 @@
-require('firestoredb/environment.js')
+import 'firestoredb/environment.js'
 
 process.env.NODE_ENV = 'localhost'
