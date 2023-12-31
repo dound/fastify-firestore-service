@@ -1,9 +1,9 @@
-const components = require('../examples')
+import components from '../examples/index'
 
-const { makeApp } = require('.')
+import { makeApp } from './index'
 
 // example start
-module.exports = makeApp({
+export default makeApp({
   service: 'unittest',
   components,
   cookie: {

@@ -112,7 +112,7 @@ const components = {
 }
 ```
 ```javascript <!-- embed:src/app.js:section:example start:example end -->
-module.exports = makeApp({
+export default makeApp({
   service: 'unittest',
   components,
   cookie: {

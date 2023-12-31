@@ -1,4 +1,4 @@
-const fp = require('fastify-plugin')
+import fp from 'fastify-plugin'
 
 function addContentParser (fastify, options, next) {
   fastify.addContentTypeParser('application/json',
@@ -15,7 +15,7 @@ function addContentParser (fastify, options, next) {
   next()
 }
 
-module.exports = fp(addContentParser, {
+export default fp(addContentParser, {
   fastify: '>=3.x',
   name: 'content-parser'
 })

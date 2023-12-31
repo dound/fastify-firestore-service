@@ -1,7 +1,7 @@
-const fp = require('fastify-plugin')
+import fp from 'fastify-plugin'
 const symbolRequestTime = Symbol('RequestTimer')
 
-module.exports = fp(function (fastify, options, next) {
+export default fp(function (fastify, options, next) {
   // istanbul ignore if
   if (options.latencyTracker.disabled) {
     next()
@@ -31,7 +31,7 @@ module.exports = fp(function (fastify, options, next) {
     // if errored, then it was already logged
     if (!reply.raw.logged) {
       req.log.info({
-        req: req,
+        req,
         status: reply.raw.statusCode,
         latency: reply.getHeader(header)
       })

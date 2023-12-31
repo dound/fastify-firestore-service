@@ -1,14 +1,14 @@
-const fastify = require('fastify')
+import fastify from 'fastify'
 
-const ComponentRegistrator = require('./component-registrator')
-const makeLogger = require('./make-logger')
-const compressPlugin = require('./plugins/compress')
-const contentParserPlugin = require('./plugins/content-parser')
-const cookiePlugin = require('./plugins/cookie')
-const errorHandlerPlugin = require('./plugins/error-handler')
-const healthCheckPlugin = require('./plugins/health-check')
-const latencyTrackerPlugin = require('./plugins/latency-tracker')
-const swaggerPlugin = require('./plugins/swagger')
+import ComponentRegistrator from './component-registrator'
+import makeLogger from './make-logger'
+import compressPlugin from './plugins/compress'
+import contentParserPlugin from './plugins/content-parser'
+import cookiePlugin from './plugins/cookie'
+import errorHandlerPlugin from './plugins/error-handler'
+import healthCheckPlugin from './plugins/health-check'
+import latencyTrackerPlugin from './plugins/latency-tracker'
+import swaggerPlugin from './plugins/swagger'
 
 /**
  * @typedef {object} CookieConfig
@@ -117,7 +117,7 @@ function loadConfigDefault (config, defaultConfig) {
  * @param {SwaggerConfig} [params.swagger] Configures swagger.
  * @returns {Promise<server>} fastify app with configured plugins
  */
-async function makeApp (params = {}) {
+export default async function makeApp (params = {}) {
   const configs = [
     [() => params, PARAMS_CONFIG],
     [() => params.cookie, COOKIE_CONFIG],
@@ -169,5 +169,3 @@ async function makeApp (params = {}) {
   await registrator.registerComponents(components)
   return app
 }
-
-module.exports = makeApp

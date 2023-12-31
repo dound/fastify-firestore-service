@@ -27,6 +27,8 @@
     },
     "cSpell.words": [
         "fastify",
-        "firestoredb"
+        "firestoredb",
+        "registrator",
+        "uuidv"
     ]
 }

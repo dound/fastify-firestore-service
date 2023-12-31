@@ -1,10 +1,10 @@
-const S = require('@pocketgems/schema')
-const fp = require('fastify-plugin')
-const uuidv4 = require('uuid').v4
+import S from '@pocketgems/schema'
+import fp from 'fastify-plugin'
+import { v4 as uuidv4 } from 'uuid'
 
-const { EXCEPTIONS: { InvalidInputException } } = require('../api')
+import { EXCEPTIONS } from '../api'
 
-module.exports = fp(function (fastify, options, next) {
+export default fp(function (fastify, options, next) {
   const returnErrorDetail = options.errorHandler.returnErrorDetail
   // log any exception which occurs
   fastify.setErrorHandler(async (error, req, reply) => {
@@ -13,7 +13,7 @@ module.exports = fp(function (fastify, options, next) {
     const errorMessage = error.message.split('\n')
     traceback.splice(0, errorMessage.length)
     let removeFromIdx
-    if (error instanceof InvalidInputException) {
+    if (error instanceof EXCEPTIONS.InvalidInputException) {
       removeFromIdx = 1
     } else {
       for (let i = traceback.length - 1; i > 0; i--) {
@@ -35,7 +35,7 @@ module.exports = fp(function (fastify, options, next) {
     reply.code(statusCode)
     const errInfo = {
       msg: message,
-      req: req,
+      req,
       reqid: uuidv4(),
       status: statusCode,
       stack: traceback

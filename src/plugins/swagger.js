@@ -1,9 +1,9 @@
 // istanbul ignore file
-const swagger = require('@fastify/swagger')
-const swaggerUI = require('@fastify/swagger-ui')
-const fp = require('fastify-plugin')
+import swagger from '@fastify/swagger'
+import swaggerUI from '@fastify/swagger-ui'
+import fp from 'fastify-plugin'
 
-module.exports = fp(function (fastify, options, next) {
+export default fp(function (fastify, options, next) {
   if (options.swagger.disabled) {
     next()
     return

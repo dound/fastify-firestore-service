@@ -2,7 +2,7 @@ import zlib from 'node:zlib'
 
 import got from 'got'
 
-module.exports = (options) => {
+export default (options) => {
   options = {
     decompress: true,
     ...options

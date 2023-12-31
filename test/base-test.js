@@ -1,6 +1,6 @@
-const { BaseTest, runTests } = require('@pocketgems/unit-test')
-const superagentDefaults = require('superagent-defaults')
-const supertest = require('supertest')
+import { BaseTest, runTests } from '@pocketgems/unit-test'
+import superagentDefaults from 'superagent-defaults'
+import supertest from 'supertest'
 
 let FASTIFY_CACHE
 
@@ -143,7 +143,7 @@ function mockGot () {
   return got
 }
 
-module.exports = {
+export {
   BaseAppTest,
   BaseTest,
   mockGot,

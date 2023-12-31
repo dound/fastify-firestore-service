@@ -1,7 +1,7 @@
-const cookiePlugin = require('@fastify/cookie')
-const fp = require('fastify-plugin')
+import cookiePlugin from '@fastify/cookie'
+import fp from 'fastify-plugin'
 
-function addContentParser (fastify, options, next) {
+function addCookiePlugin (fastify, options, next) {
   // istanbul ignore if
   if (options.cookie.disabled) {
     next()
@@ -11,7 +11,7 @@ function addContentParser (fastify, options, next) {
   next()
 }
 
-module.exports = fp(addContentParser, {
+export default fp(addCookiePlugin, {
   fastify: '>=3.x',
   name: 'content-parser'
 })

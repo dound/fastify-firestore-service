@@ -6,13 +6,13 @@
 
 // to circumvent problems caused by importing zlib, we do it in a separate file
 // so we can ignore it in linting
-const zlib = require('zlib')
+import zlib from 'node:zlib'
 
-const { fastifyCompress } = require('@fastify/compress')
-const fp = require('fastify-plugin')
+import { fastifyCompress } from '@fastify/compress'
+import fp from 'fastify-plugin'
 
 // TODO: fine tune configurations once we have a reliable usage pattern
-module.exports = fp(function (fastify, options, next) {
+export default fp(function (fastify, options, next) {
   fastify.register(fastifyCompress, {
     threshold: 20,
     brotliOptions: {

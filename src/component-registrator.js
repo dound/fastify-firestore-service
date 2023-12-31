@@ -1,4 +1,4 @@
-class ComponentRegistrator {
+export default class ComponentRegistrator {
   apis = []
 
   constructor (app, service) {
@@ -25,5 +25,3 @@ class ComponentRegistrator {
     await model.createResources()
   }
 }
-
-module.exports = ComponentRegistrator

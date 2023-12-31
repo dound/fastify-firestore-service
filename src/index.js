@@ -1,9 +1,9 @@
-const api = require('./api')
-const ComponentRegistrator = require('./component-registrator')
-const makeApp = require('./make-app')
+import { API, TxAPI, EXCEPTIONS, RESPONSES } from './api/index'
+import ComponentRegistrator from './component-registrator'
+import makeApp from './make-app'
 
-module.exports = {
-  ...api,
+export {
+  API, TxAPI, EXCEPTIONS, RESPONSES,
   makeApp,
   ComponentRegistrator
 }

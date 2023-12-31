@@ -1,4 +1,4 @@
-import { makeApp } from '../src'
+import { makeApp } from '../src/index'
 
 import { BaseTest, runTests } from './base-test'
 

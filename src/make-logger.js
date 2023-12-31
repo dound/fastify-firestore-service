@@ -1,8 +1,8 @@
 // istanbul ignore file
-const querystring = require('querystring')
+import querystring from 'node:querystring'
 
-const pino = require('pino')
-const wrap = require('word-wrap')
+import pino from 'pino'
+import wrap from 'word-wrap'
 
 // for localhost and unit testing, output to the console INSTEAD of to stdout
 // via pino (so that jest captures the output and groups it with the right test
@@ -76,7 +76,7 @@ function getLocalhostOverrides () {
   return { prettifier }
 }
 
-module.exports = function makeCustomLogger (isLocalhost) {
+export default function makeCustomLogger (isLocalhost) {
   function serializeReq (req) {
     const q = req.query
     if (req.raw) {
@@ -89,7 +89,7 @@ module.exports = function makeCustomLogger (isLocalhost) {
       uid: req.headers['x-uid'] || '',
       method: req.method,
       ua: req.headers['user-agent'] || '',
-      path: path,
+      path,
       q: q || querystring.decode(qs)
     }
   }

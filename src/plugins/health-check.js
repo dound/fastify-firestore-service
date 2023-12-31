@@ -1,6 +1,6 @@
-const fp = require('fastify-plugin')
+import fp from 'fastify-plugin'
 
-module.exports = fp(function (fastify, options, next) {
+export default fp(function (fastify, options, next) {
   // istanbul ignore if
   if (options.healthCheck.disabled) {
     next()
