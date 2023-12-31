@@ -1,14 +1,6 @@
-const basic = require('./basic')
-const cors = require('./cors')
-const docs = require('./docs')
-const pagination = require('./pagination')
-const tx = require('./tx')
-
-module.exports = {
-  ...basic,
-  ...cors,
-  ...docs,
-  ...pagination,
-  ...tx,
-  notAPI: {}
-}
+export * from './basic'
+export * from './cors'
+export * from './docs'
+export * from './pagination'
+export * from './tx'
+export const notAPI = {}

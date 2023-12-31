@@ -1,4 +1,4 @@
-import components from '../examples/index'
+import * as components from '../examples/index'
 
 import { makeApp } from './index'
 

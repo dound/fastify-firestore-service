@@ -1,6 +1,6 @@
 import S from '@pocketgems/schema'
 
-import API from '../src/index'
+import { API } from '../src/index'
 
 function fetchPage ({ amount, nextToken }) {
   if (!nextToken) {
@@ -35,6 +35,6 @@ class PaginatedAPI extends API {
   }
 }
 
-module.exports = {
+export {
   PaginatedAPI
 }
