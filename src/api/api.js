@@ -3,6 +3,8 @@ import querystring from 'node:querystring'
 
 import S from '@pocketgems/schema'
 
+import gotWrapper from '../got-wrapper'
+
 import {
   BadRequestException,
   InvalidInputException,
@@ -344,9 +346,6 @@ export default class API {
   async callAPI ({
     method = 'POST', headers = {}, url, body, searchParams, compress
   }) {
-    // Delay import got, 1. in case it's not used, or 2. we need to mock got
-    const got = require('../got-wrapper')
-
     headers = { ...headers } // copy so we can modify it
     this.addHeadersToForward(headers)
     const request = {
@@ -358,7 +357,7 @@ export default class API {
       throwHttpErrors: false,
       compress
     }
-    const resp = got(request)
+    const resp = gotWrapper(request)
     const resolvedResp = await resp
     const ret = {
       code: resolvedResp.statusCode
