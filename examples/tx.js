@@ -1,7 +1,7 @@
 const assert = require('assert')
 
-const db = require('@pocketgems/dynamodb')
 const S = require('@pocketgems/schema')
+const db = require('firestoredb')
 const uuidv4 = require('uuid').v4
 
 const { TxAPI } = require('..')

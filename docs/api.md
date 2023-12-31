@@ -275,7 +275,7 @@ class NonStandardResponse extends RequestDone {
 
 ## Database Transactions
 `TxAPI` wraps your request in a transaction context
-from the [Data Modeling Library](https://github.com/pocketgems/dynamodb):
+from the [Data Modeling Library](https://github.com/dound/firestoredb):
 ```javascript
 class SomeAPI extends TxAPI {
   static IS_READ_ONLY = false

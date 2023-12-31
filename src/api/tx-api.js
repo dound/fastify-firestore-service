@@ -1,4 +1,4 @@
-const db = require('@pocketgems/dynamodb')
+const db = require('firestoredb')
 
 const { API } = require('./api')
 
@@ -27,10 +27,8 @@ class TxAPI extends API {
 
     let ret
     try {
-      ret = await db.Transaction.run(async tx => {
-        if (this.constructor.IS_READ_ONLY) {
-          tx.makeReadOnly()
-        }
+      const opts = { readOnly: this.constructor.IS_READ_ONLY }
+      ret = await db.Context.run(opts, async tx => {
         this.tx = tx
         this.req.tx = tx
         let respData = await super._computeResponse()

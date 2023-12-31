@@ -21,13 +21,6 @@ enterprise scale applications supporting millions of users.
   - [AWS SDKs](#aws-sdks)
 
 # Key Features
-- High level [DB library](https://www.npmjs.com/package/@pocketgems/dynamodb)
-  - For AWS DyanmoDB
-  - Schemaful
-  - Transactional
-  - Scalable
-  - Lighting fast
-  - Support DAX, Index, Query, Scan and more
 - High level [API library](docs/api.md)
   - Routing
   - Input, output schema
@@ -37,6 +30,7 @@ enterprise scale applications supporting millions of users.
   - Compression
   - Health check API
   - Advanced error handling
+  - Works with the FirestoreDB library
 - SDK Generation
   - Swagger UI
   - OpenAPI SDK
@@ -50,7 +44,7 @@ within hours.
 ## Creating A Database Table
 You can create a database table with a few lines of code:
 ```js
-const db = require('@pocketgems/dynamodb')
+const db = require('firestoredb')
 const S = require('@pocketgems/schema')
 
 class Order extends db.Model {
@@ -76,12 +70,12 @@ and dollar price. The example uses 2 dependencies for defining schema and data
 model. You may read more about these libraries in greater detail in their
 perspective project later:
 - [Todea Schema library](https://github.com/pocketgems/schema)
-- [Todea DynamoDB library](https://github.com/pocketgems/dynamodb)
+- [FirestoreDB library](https://github.com/dound/firestoredb)
 
 ## Creating An API
 You can create an API to look up order details like this:
 ```js
-const { TxAPI, EXCEPTIONS: { NotFoundException } } = require('@pocketgems/app')
+const { TxAPI, EXCEPTIONS: { NotFoundException } } = require('dound/fastify-app')
 
 class GetOrderAPI extends TxAPI {
   static PATH = '/getOrder'
@@ -111,7 +105,7 @@ You can read more about API interface [here](docs/api.md).
 ## Creating An App
 To create a Todea app, you have to call `makeApp` like this:
 ```js
-const { makeApp } = require('@pocketgems/app')
+const { makeApp } = require('dound/fastify-app')
 
 const components = {
   Order,
@@ -165,8 +159,7 @@ require(pathToApp)
 
 # Components
 Todea app is composed of components. A Todea app component can be an API, DB
-Table ([db.Model](https://github.com/pocketgems/dynamodb#tables)), S3 bucket
-etc. These components are passed to `makeApp()` in an object as `components`.
+Collection, etc. These components are passed to `makeApp()` in an object as `components`.
 For example, `components` may be initialized like this:
 
 ```js
@@ -182,9 +175,8 @@ makeApp({
 ```
 
 Internally, each of these components get registered to a corresponding system.
-For example, API is registered with fastify as a route, while db table is
-registered with AWS DynamoDB service, or as an AWS CloudFormation Resource if
-Infrastructure-As-Code is required.
+For example, API is registered with fastify as a route. Other components may
+use Terraform if Infrastructure-As-Code is required.
 
 ## Customizing Component Registration
 The component system uses a visitor pattern to allow extending the registration
@@ -221,11 +213,9 @@ workflow with custom components. For example, to add a new type of component
 
 # Unit testing
 ## Setup
-Todea apps store data in AWS DynamoDB service. You must setup the database
-before running tests. You can run
-`yarn --cwd ./node_modules/@pocketgems/app setup; yarn --cwd ./node_modules/@pocketgems/app start-local-db`
-to start a local AWS DynamoDB docker instance. And use
-`@pocketgems/app/test/environment.js` to setup Jest envrionments.
+Apps store data in Firestore. You must setup the database
+before running tests. You can run `yarn start-local-db`
+to start a local emulator. And use `test/environment.js` to setup Jest envrionments.
 
 ## Writing Tests
 This library exposes `@pocketgems/unit-test` through
@@ -246,7 +236,7 @@ This library generates an interactive Swagger UI for all APIs at /[service]/docs
 You can export APIs in an OpenAPI schema from /[service]/docs/json, and use that
 with OpenAPI / Swagger SDK to generate SDKs in any supported languages.
 
-CAUTION: Swagger SDKs use postional arguments in all SDKs, maintaining backward
+CAUTION: Swagger SDKs use positional arguments in all SDKs, maintaining backward
 compatibility will be challenging with vanilla SDK generators. You may customize
 the generators to pass keyword arguments instead for languages that support it.
 

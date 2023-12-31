@@ -6,7 +6,7 @@ function getURI (postfix) {
   return '/unittest' + postfix
 }
 
-class DynamodbLibTest extends BaseAppTest {
+class DBLibTest extends BaseAppTest {
   async testThrow500 () {
     // Make sure custom loggers etc works.
     const result = await this.app.post(getURI('/throw500')).expect(500)
@@ -116,4 +116,4 @@ class DynamodbLibTest extends BaseAppTest {
   }
 }
 
-runTests(DynamodbLibTest)
+runTests(DBLibTest)

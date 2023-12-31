@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Run Tests",
-            "preLaunchTask": "Start DynamoDB Local",
+            "preLaunchTask": "Start DB Local",
             "runtimeExecutable": "${workspaceFolder}/node_modules/nodemon/bin/nodemon.js",
             "runtimeArgs": [
               "--watch",

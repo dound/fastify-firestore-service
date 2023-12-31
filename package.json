@@ -9,7 +9,7 @@
     "debug": "yarn start-local-db; ./node_modules/nodemon/bin/nodemon.js --no-lazy --legacy-watch --watch ./src --watch ./examples --watch ./test --inspect=9229 ./node_modules/jest/bin/jest.js --coverage --config=./jest.config.json --runInBand",
     "test": "yarn start-local-db; ./node_modules/jest/bin/jest.js --coverage --config=./jest.config.json",
     "setup": "yarn && pip install -r requirements.txt",
-    "start-local-db": "yarn --cwd ./node_modules/@pocketgems/dynamodb setup; yarn --cwd ./node_modules/@pocketgems/dynamodb start-local-db"
+    "start-local-db": "yarn --cwd ./node_modules/firestoredb setup; yarn --cwd ./node_modules/firestore start-local-db"
   },
   "contributors": [
     "David Underhill",
@@ -40,16 +40,12 @@
     "pino": "8.17.2",
     "word-wrap": "^1.2.3"
   },
-  "peerDependencies": {
-    "@pocketgems/dynamodb": "^0.2.9",
-    "@pocketgems/schema": "^0.1.2"
-  },
   "devDependencies": {
     "@babel/core": "^7.17.12",
     "@babel/eslint-parser": "^7.17.0",
     "@babel/plugin-transform-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.17.12",
-    "@pocketgems/dynamodb": "^0.3.1",
+    "firestoredb": "dound/firestoredb#bcac77191aa73cc2283739ffec0fdd4df4efb826",
     "@pocketgems/schema": "^0.1.2",
     "@pocketgems/unit-test": "^0.2.0",
     "babel-loader": "^9.1.3",

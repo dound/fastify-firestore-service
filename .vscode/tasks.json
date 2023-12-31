@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
       {
-        "label": "Start DynamoDB Local",
+        "label": "Start DB Local",
         "type": "shell",
         "command": "yarn start-local-db",
       }
