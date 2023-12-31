@@ -3,7 +3,7 @@ import * as components from '../examples/index'
 import { makeApp } from './index'
 
 // example start
-export default makeApp({
+export default async () => makeApp({
   service: 'unittest',
   components,
   cookie: {

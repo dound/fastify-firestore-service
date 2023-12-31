@@ -112,7 +112,7 @@ const components = {
 }
 ```
 ```javascript <!-- embed:src/app.js:section:example start:example end -->
-export default makeApp({
+export default async () => makeApp({
   service: 'unittest',
   components,
   cookie: {
@@ -141,6 +141,7 @@ to
 For example, `makeApp()` is called in a `app.js` file, and the returned promise
 is exported, then you write the following code to create a server:
 ```javascript <!-- embed:examples/server.js:section:example start:example end -->
+const app = await makeApp()
 app.listen({ port: 8090, host: '0.0.0.0' })
 ```
 

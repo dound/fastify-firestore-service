@@ -3,8 +3,9 @@
 
 import '../test/environment'
 
-import app from '../src/app'
+import makeApp from '../src/app'
 
 // example start
+const app = await makeApp()
 app.listen({ port: 8090, host: '0.0.0.0' })
 // example end
