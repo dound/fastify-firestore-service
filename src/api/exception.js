@@ -137,15 +137,6 @@ class RequestError extends __RequestDone {
   }
 
   /**
-   * Schema to use in SDKs
-   */
-  static get c2jSchema () {
-    return S.obj({
-      message: S.str.optional().title('ErrorMessage')
-    })
-  }
-
-  /**
    * Data to return to the caller
    */
   get respData () {

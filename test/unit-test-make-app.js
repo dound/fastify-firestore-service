@@ -8,8 +8,7 @@ class MakeAppTest extends BaseTest {
       service: 'test',
       components: [],
       cookie: { disabled: true },
-      healthCheck: { disabled: true },
-      awsC2j: { disabled: true }
+      healthCheck: { disabled: true }
     }
     await expect(makeApp())
       .rejects.toThrow('Missing required value for service')

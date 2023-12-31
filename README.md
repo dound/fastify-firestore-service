@@ -18,7 +18,6 @@ enterprise scale applications supporting millions of users.
 - [Generating SDKs](#generating-sdks)
   - [Swagger UI](#swagger-ui)
   - [OpenAPI SDKs](#openapi-sdks)
-  - [AWS SDKs](#aws-sdks)
 
 # Key Features
 - High level [API library](docs/api.md)
@@ -123,13 +122,6 @@ module.exports = makeApp({
     reportErrorDetail: true, // process.env.NODE_ENV === 'localhost',
     unittesting: true, // process.env.NODE_ENV === 'localhost',
     reportAllErrors: true // process.env.NODE_ENV !== 'prod'
-  },
-  awsC2j: {
-    version: '2020-02-20',
-    displayName: 'Unit Test',
-    signatureVersion: 'v4',
-    globalEndpoint: 'todea.example.com',
-    globalHeaders: ['x-app', 'x-uid', 'x-admin', 'x-token']
   },
   swagger: {
     disabled: false,
@@ -239,19 +231,3 @@ with OpenAPI / Swagger SDK to generate SDKs in any supported languages.
 CAUTION: Swagger SDKs use positional arguments in all SDKs, maintaining backward
 compatibility will be challenging with vanilla SDK generators. You may customize
 the generators to pass keyword arguments instead for languages that support it.
-
-## AWS SDKs
-This library adds REST APIs to generate C2J schemas. It is what AWS uses to
-generate their SDKs and CLI. One set for public APIs and one set for private
-APIs. In the following lines `group` can be `service`, `admin` or `user`.
-
-- **/[service]/c2j/[group]/uid**: Returns the API version, e.g.
-  example-2020-09-20.
-- **/[service]/c2j/[group]/normal**: Returns the normal C2J schema. This schema
-  contains API definition and documentations.
-- **/[service]/c2j/[group]/api**: Returns normal C2J schema minus any
-  documentation.
-- **/[service]/c2j/[group]/docs**: Returns a docs C2J schema.
-
-If there is no API to be exported, these endpoints will return empty string as
-the response.

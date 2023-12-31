@@ -29,7 +29,6 @@ This library is used to define Todea APIs.
   - [Controlling API Visibility in SDKs](#controlling-api-visibility-in-sdks)
   - [Custom Middleware](#custom-middleware)
   - [Gotcha: Sharing Schemas](#gotcha-sharing-schemas)
-  - [Gotcha: Unrelated API Parameters with the Same Name](#gotcha-unrelated-api-parameters-with-the-same-name)
   - [Gotcha: Response for APIs included in SDKs must be objects](#gotcha-response-for-apis-included-in-sdks-must-be-objects)
   - [Localhost Cross-Origin Resource Sharing (CORS)](#localhost-cross-origin-resource-sharing-cors)
 - [Appendix](#appendix)
@@ -741,17 +740,6 @@ the object. They each need their own copy of the schema (which the getter
 creates and returns). If they both built from the same copy, it would cause
 internal problems with the schema object.
 
-
-## Gotcha: Unrelated API Parameters with the Same Name
-Sometimes you might have multiple APIs which all have an input parameter with
-the same generic name (e.g., "id") but expect difference schemas for each of
-these input parameters. In this case, [c2j](../docs/aws-c2j.md) will fail
-because it doesn't know how to tell the difference between these parameters. To
-differentiate them you need to specify a unique title for each distinct schema,
-for example:
-```javascript
-  static BODY = S.obj({ id: S.str.pattern(/.../).title('some unique title') })
-```
 
 ## Gotcha: Response for APIs included in SDKs must be objects
 Todea SDKs require response types to be JSON objects. This is a best practice

@@ -2,7 +2,6 @@ const fastify = require('fastify')
 
 const ComponentRegistrator = require('./component-registrator')
 const makeLogger = require('./make-logger')
-const awsPlugin = require('./plugins/aws-c2j')
 const compressPlugin = require('./plugins/compress')
 const contentParserPlugin = require('./plugins/content-parser')
 const cookiePlugin = require('./plugins/cookie')
@@ -50,33 +49,8 @@ const HEALTH_CHECK_CONFIG = {
 }
 
 /**
- * @typedef {object} AwsC2jConfig
- * @property {boolean} [disabled=false] Whether to disable AWS C2J schema APIs
- * @property {string} [path='/c2j'] The path to the schema endpoints.
- * @property {string} displayName The SDK's name, e.g. IAM, Leaderboard,
- *   CloudFront. This is the display name of the generated SDK.
- * @property {string} version The version of the SDK, e.g. 2022-02-20.
- * @property {string} signatureVersion The signature version to use. See AWS
- *   SDK's supported signature versions, e.g. 'v4'. Or you can create your own
- *   signer classes in forked AWS SDKs.
- * @property {string} globalEndpoint The endpoint to use
- * @property {Array<string>} globalHeaders Headers setup globally at SDK level,
- *   so individual APIs should not include these. For example,
- *   aws_access_key_id
- */
-const AWS_C2J_CONFIG = {
-  disabled: false,
-  path: '/c2j',
-  displayName: undefined,
-  version: undefined,
-  signatureVersion: undefined,
-  globalEndpoint: undefined,
-  globalHeaders: []
-}
-
-/**
  * @typedef {object} SwaggerConfig
- * @property {boolean} [disabled=false] Whether to disable AWS C2J schema APIs
+ * @property {boolean} [disabled=false] Whether to disable
  * @property {Array<string>} [servers=[]] The host endpoint (scheme + domain) to
  *   send requests to
  * @property {Array<string>} [authHeaders=[]] Authentication headers
@@ -104,7 +78,6 @@ const PARAMS_CONFIG = {
   service: undefined,
   components: undefined,
   RegistratorCls: ComponentRegistrator,
-  awsC2j: {},
   cookie: {},
   healthCheck: {},
   latencyTracker: {},
@@ -137,7 +110,6 @@ function loadConfigDefault (config, defaultConfig) {
  *   components.
  * @param {object} [params.RegistratorCls=ComponentRegistrator] A subclass of
  *   ComponentRegistrator
- * @param {AwsC2jConfig} [params.awsC2j] Configures generated AWS SDK schema
  * @param {CookieConfig} [params.cookie] Configures fastify-cookie.
  * @param {HealthCheckConfig} [params.healthCheck] Configures health check endpoint.
  * @param {LatencyTrackerConfig} [params.latencyTracker]
@@ -148,7 +120,6 @@ function loadConfigDefault (config, defaultConfig) {
 async function makeApp (params = {}) {
   const configs = [
     [() => params, PARAMS_CONFIG],
-    [() => params.awsC2j, AWS_C2J_CONFIG],
     [() => params.cookie, COOKIE_CONFIG],
     [() => params.healthCheck, HEALTH_CHECK_CONFIG],
     [() => params.latencyTracker, LATENCY_TRACKER_CONFIG],
@@ -162,7 +133,6 @@ async function makeApp (params = {}) {
     service,
     components,
     RegistratorCls,
-    awsC2j,
     cookie,
     healthCheck,
     latencyTracker,
@@ -197,15 +167,6 @@ async function makeApp (params = {}) {
     .register(swaggerPlugin, { swagger: { service, ...swagger } })
 
   await registrator.registerComponents(components)
-
-  app.register(awsPlugin, {
-    awsC2j: {
-      service,
-      apis: registrator.apis,
-      ...awsC2j
-    }
-  })
-
   return app
 }
 
