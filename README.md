@@ -44,7 +44,7 @@ within hours.
 You can create a database table with a few lines of code:
 ```js
 const db = require('firestoredb')
-const S = require('@pocketgems/schema')
+import S from '@pocketgems/schema'
 
 class Order extends db.Model {
   static KEY = {

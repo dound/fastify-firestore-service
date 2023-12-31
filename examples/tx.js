@@ -1,6 +1,6 @@
 const assert = require('assert')
 
-const S = require('@pocketgems/schema')
+import S from '@pocketgems/schema'
 const db = require('firestoredb')
 const uuidv4 = require('uuid').v4
 

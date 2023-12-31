@@ -1,9 +1,10 @@
-const { AssertionError } = require('assert')
-const querystring = require('querystring')
+import { AssertionError } from 'node:assert'
+import querystring from 'node:querystring'
 
-const { API, EXCEPTIONS: { BadRequestException } } = require('..')
+import { RequestValidationAPI } from '../examples/basic'
+import { API, EXCEPTIONS } from '../src/index'
 
-const { BaseAppTest, mockGot, runTests } = require('./base-test')
+import { BaseAppTest, mockGot, runTests } from './base-test'
 
 const mockedGot = mockGot()
 
@@ -338,10 +339,10 @@ class BasicTest extends BaseAppTest {
   }
 
   async testRequestError () {
-    const errNoMsg = new BadRequestException()
+    const errNoMsg = new EXCEPTIONS.BadRequestException()
     expect(errNoMsg.httpCode).toBe(400)
     expect(errNoMsg.respData.message).toEqual('')
-    const errWithMsg = new BadRequestException('hi')
+    const errWithMsg = new EXCEPTIONS.BadRequestException('hi')
     expect(errWithMsg.httpCode).toBe(400)
     expect(errWithMsg.respData.message).toEqual('hi')
   }
@@ -369,7 +370,7 @@ class BasicTest extends BaseAppTest {
       const expCode = expRetCode || code
       const result = await app.post(getURI('/multiSchema'))
         .set('Content-Type', 'application/json')
-        .send({ code: code, respText: body })
+        .send({ code, respText: body })
         .expect(expCode)
       if (expRet !== null) {
         if (expCode < 400) {
@@ -575,9 +576,7 @@ class RequestValidationTest extends BaseAppTest {
   }
 
   async testUnknownValidationError () {
-    const { RequestValidationAPI } = require('../examples/basic')
-    const { EXCEPTIONS: { InvalidInputException } } = require('..')
-    const err = new InvalidInputException({ message: 'hai' })
+    const err = new EXCEPTIONS.InvalidInputException({ message: 'hai' })
     jest.spyOn(RequestValidationAPI.prototype, 'helperMethod')
       .mockRejectedValue(err)
 

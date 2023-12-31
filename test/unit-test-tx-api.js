@@ -1,6 +1,6 @@
-const uuidv4 = require('uuid').v4
+import { v4 as uuidv4 } from 'uuid'
 
-const { BaseAppTest, runTests } = require('./base-test')
+import { BaseAppTest, runTests } from './base-test'
 
 function getURI (postfix) {
   return '/unittest' + postfix

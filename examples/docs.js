@@ -1,6 +1,6 @@
 const assert = require('assert')
 
-const S = require('@pocketgems/schema')
+import S from '@pocketgems/schema'
 
 const {
   API,

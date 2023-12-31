@@ -1,4 +1,4 @@
-const { BaseAppTest, runTests } = require('./base-test')
+import { BaseAppTest, runTests } from './base-test'
 
 function getURI (path) {
   return `/unittest${path}`

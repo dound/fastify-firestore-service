@@ -2,6 +2,8 @@ import { BaseTest, runTests } from '@pocketgems/unit-test'
 import superagentDefaults from 'superagent-defaults'
 import supertest from 'supertest'
 
+import makeApp from '../src/app'
+
 let FASTIFY_CACHE
 
 afterAll(async () => {
@@ -10,12 +12,8 @@ afterAll(async () => {
 })
 
 class BaseAppTest extends BaseTest {
-  static async requireApp () {
-    return require('../src/app')
-  }
-
   async beforeAll () {
-    this.fastify = FASTIFY_CACHE ?? await this.constructor.requireApp()
+    this.fastify = FASTIFY_CACHE ?? await makeApp()
     FASTIFY_CACHE = this.fastify
 
     await Promise.all([super.beforeAll(), this.fastify.ready()])

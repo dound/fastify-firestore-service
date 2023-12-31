@@ -1,8 +1,8 @@
-const S = require('@pocketgems/schema')
+import S from '@pocketgems/schema'
 
-const { API, EXCEPTIONS: { RequestDone } } = require('..')
+import { API, EXCEPTIONS } from '../src/index'
 
-const { BaseAppTest, runTests } = require('./base-test')
+import { BaseAppTest, runTests } from './base-test'
 
 function getURI (path) {
   return `/unittest${path}`
@@ -64,7 +64,7 @@ class PaginationTest extends BaseAppTest {
 
     paginatedAPI = class extends API {
       static ENABLE_PAGINATION = true
-      static RESPONSE = class extends RequestDone {
+      static RESPONSE = class extends EXCEPTIONS.RequestDone {
         static SCHEMA = undefined
       }
     }
@@ -97,7 +97,7 @@ class PaginationTest extends BaseAppTest {
 
     paginatedAPI = class extends API {
       static ENABLE_PAGINATION = true
-      static RESPONSE = class extends RequestDone {
+      static RESPONSE = class extends EXCEPTIONS.RequestDone {
         static SCHEMA = { a: S.arr(S.str) }
       }
     }

@@ -1,4 +1,4 @@
-const { BaseAppTest, runTests } = require('./base-test')
+import { BaseAppTest, runTests } from './base-test'
 
 function getURI (path) {
   return `/unittest${path}`
@@ -149,9 +149,9 @@ class DocsTest extends BaseAppTest {
     async function check (code, shouldThrow, shouldPreCommitThrow) {
       const ret = await app.post(getURI('/preCommit'))
         .query({
-          shouldThrow: shouldThrow,
-          shouldPreCommitThrow: shouldPreCommitThrow,
-          code: code
+          shouldThrow,
+          shouldPreCommitThrow,
+          code
         })
         .expect(code)
       // preCommit() is called only if computeResponse() ends with code 200
