@@ -25,6 +25,6 @@ export default (options, mockedGot) => {
       headers['content-encoding'] = 'br'
     }
   }
-  const got = mockedGot ?? realGot
+  const got = mockedGot ?? this.__mocked_got ?? realGot
   return got(options)
 }

@@ -89,10 +89,12 @@ function makeGotMockValue (body, statusCode, callback) {
 }
 
 function mockGot () {
-  const got = require('../src/got')
-  jest.mock('../src/got')
-  got.mockResp = (body = '', statusCode = 200, callback) => {
-    got.mockReturnValue(makeGotMockValue(body, statusCode, callback))
+  const gotMock = jest.fn().mockImplementation(({ body }) => {
+    expect(body).toEqual(zlib.brotliCompressSync('321'))
+  })
+
+  gotMock.mockResp = (body = '', statusCode = 200, callback) => {
+    gotMock.mockReturnValue(makeGotMockValue(body, statusCode, callback))
   }
 
   /**
@@ -102,8 +104,8 @@ function mockGot () {
    *   to check and see if they have a mock response to use; if no callback,
    *   provides a mock response then an error will be thrown
    */
-  got.mockRespWithCallback = (...callbacks) => {
-    got.mockImplementation(request => {
+  gotMock.mockRespWithCallback = (...callbacks) => {
+    gotMock.mockImplementation(request => {
       for (const callback of callbacks) {
         const desiredHTTPResponse = callback(request)
         if (desiredHTTPResponse === true) {
@@ -125,11 +127,11 @@ function mockGot () {
   }
 
   // will respond to the next N requests with the specified N responses
-  got.mockRespMulti = (...responses) => {
+  gotMock.mockRespMulti = (...responses) => {
     let idx = 0
     function setupNextResponse () {
       if (idx < responses.length) {
-        got.mockResp(...responses[idx], setupNextResponse)
+        gotMock.mockResp(...responses[idx], setupNextResponse)
       } else if (idx > responses.length) {
         // exactly equal means we just got our last callback (okay)
         throw new Error('more requests made than we had mock responses')
@@ -138,7 +140,7 @@ function mockGot () {
     }
     setupNextResponse()
   }
-  return got
+  return gotMock
 }
 
 export {

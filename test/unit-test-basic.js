@@ -6,8 +6,6 @@ import { API, EXCEPTIONS } from '../src/index'
 
 import { BaseAppTest, mockGot, runTests } from './base-test'
 
-const mockedGot = mockGot()
-
 function getURI (path) {
   return `/unittest${path}`
 }
@@ -89,8 +87,17 @@ async function checkRedirToWebApp (fastify, apiPath, app, headersToFwd = {}) {
 }
 
 class BasicTest extends BaseAppTest {
+  beforeEach () {
+    gotWrapper.__mocked_got = mockGot()
+  }
+
+  afterEach () {
+    delete gotWrapper.__mocked_got
+  }
+
   async testJSONContentParser () {
     // Empty body should be ignored even if content type is application/json
+    const mockedGot = gotWrapper.__mocked_got
     mockedGot.mockResp('')
     await this.app.post(getURI('/callAPIWithDefaults'))
       .set({
@@ -106,6 +113,7 @@ class BasicTest extends BaseAppTest {
   }
 
   async testParsingJsonResp () {
+    const mockedGot = gotWrapper.__mocked_got
     mockedGot.mockResp('{}')
     await this.app.post(getURI('/callAPIWithDefaults'))
       .set({
@@ -170,6 +178,7 @@ class BasicTest extends BaseAppTest {
   }
 
   async testForwardingHeaders () {
+    const mockedGot = gotWrapper.__mocked_got
     mockedGot.mockResp('{}')
     await this.app.post(getURI('/callAPIWithDefaults'))
       .set({
@@ -186,6 +195,7 @@ class BasicTest extends BaseAppTest {
 
   async testCallAPIWithDefaults () {
     // test default params for callAPI()
+    const mockedGot = gotWrapper.__mocked_got
     mockedGot.mockResp('')
     const expResp = {
       code: 200,
@@ -209,6 +219,7 @@ class BasicTest extends BaseAppTest {
 
   async testCallAPIWithTrailingSlashWithDefaults () {
     // test ignore trailing slash in fastify app option
+    const mockedGot = gotWrapper.__mocked_got
     mockedGot.mockResp('')
     const expResp = {
       code: 200,
