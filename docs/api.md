@@ -210,7 +210,7 @@ This library defines several exceptions classes, for example:
 
 These exceptions are exported in the `EXCEPTIONS` variable.
 ```javascript
-const { EXCEPTIONS } = require('./api')
+import { EXCEPTIONS } from 'dound/fastify-app'
 const { UnauthorizedException } = EXCEPTIONS
 ```
 

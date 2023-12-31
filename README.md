@@ -43,7 +43,7 @@ within hours.
 ## Creating A Database Table
 You can create a database table with a few lines of code:
 ```js
-const db = require('firestoredb')
+import db from 'firestoredb'
 import S from '@pocketgems/schema'
 
 class Order extends db.Model {
@@ -74,7 +74,7 @@ perspective project later:
 ## Creating An API
 You can create an API to look up order details like this:
 ```js
-const { TxAPI, EXCEPTIONS: { NotFoundException } } = require('dound/fastify-app')
+import { TxAPI, EXCEPTIONS } from 'dound/fastify-app'
 
 class GetOrderAPI extends TxAPI {
   static PATH = '/getOrder'
@@ -86,7 +86,7 @@ class GetOrderAPI extends TxAPI {
     order: Order.Schema
   }
   static EXCEPTIONS = {
-    NotFoundException
+    EXCEPTIONS.NotFoundException
   }
 
   async computeResponse ({ tx, body }) {
@@ -104,7 +104,7 @@ You can read more about API interface [here](docs/api.md).
 ## Creating An App
 To create a Todea app, you have to call `makeApp` like this:
 ```js
-const { makeApp } = require('dound/fastify-app')
+import { makeApp } from 'dound/fastify-app'
 
 const components = {
   Order,
@@ -141,12 +141,7 @@ to
 For example, `makeApp()` is called in a `app.js` file, and the returned promise
 is exported, then you write the following code to create a server:
 ```javascript <!-- embed:examples/server.js:section:example start:example end -->
-require(pathToApp)
-  .then(app => app.listen({ port: 8090, host: '0.0.0.0' }))
-  .catch((err) => {
-    console.log(err)
-    process.exit(1)
-  })
+app.listen({ port: 8090, host: '0.0.0.0' })
 ```
 
 # Components
@@ -177,7 +172,7 @@ workflow with custom components. For example, to add a new type of component
 1. Subclass `ComponentRegistrator`, and add a
    `registerExampleComponent (exampleComponent)` method
    ```js
-   const { ComponentRegistrator } = require('@pocketgems/app')
+   import { ComponentRegistrator } from 'dound/fastify-app'
 
    class CustomComponentRegistrator extends ComponentRegistrator {
        registerExampleComponent (exampleComponent) {

@@ -1,4 +1,4 @@
-const { API, TxAPI } = require('..')
+import { API, TxAPI } from '../src/index'
 
 class CORSTestAPI extends API {
   static DESC = 'CORS test'
@@ -60,7 +60,7 @@ class NotCrossOriginAPI extends CORSTestAPI {
   static PATH = '/api/cors/nope'
 }
 
-module.exports = {
+export {
   CrossAnyOriginAPI,
   CrossNoAppOriginAPI,
   CrossOneOriginAPI,

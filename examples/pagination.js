@@ -1,8 +1,6 @@
 import S from '@pocketgems/schema'
 
-const {
-  API
-} = require('..')
+import API from '../src/index'
 
 function fetchPage ({ amount, nextToken }) {
   if (!nextToken) {

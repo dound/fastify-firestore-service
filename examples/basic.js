@@ -1,8 +1,8 @@
 import S from '@pocketgems/schema'
 
-const { API, TxAPI, EXCEPTIONS, RESPONSES } = require('..')
+import { API, TxAPI, EXCEPTIONS, RESPONSES } from '../src/index'
 
-const SimpleAPI = require('./simple')
+import { SimpleAPI } from './simple'
 
 const {
   RequestDone,
@@ -283,7 +283,7 @@ class AuthentationAPI extends API {
   }
 }
 
-module.exports = {
+export {
   AuthentationAPI,
   CallAPIAPI,
   DefaultValueAPI,

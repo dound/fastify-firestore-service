@@ -1,13 +1,8 @@
-const assert = require('assert')
+import assert from 'node:assert'
 
 import S from '@pocketgems/schema'
 
-const {
-  API,
-  EXCEPTIONS,
-  RESPONSES,
-  TxAPI
-} = require('..')
+import { API, EXCEPTIONS, RESPONSES, TxAPI } from '../src/index'
 
 const {
   BadRequestException,
@@ -356,7 +351,7 @@ class ErrorPropagationAPI extends API {
   }
 }
 
-module.exports = {
+export {
   AddNumbersAPI,
   DupErrorCodeAPI,
   ErrorPropagationAPI,

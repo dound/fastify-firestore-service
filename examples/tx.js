@@ -1,12 +1,12 @@
-const assert = require('assert')
+import assert from 'node:assert'
 
 import S from '@pocketgems/schema'
-const db = require('firestoredb')
-const uuidv4 = require('uuid').v4
+import db from 'firestoredb'
+import { v4 as uuidv4 } from 'uuid'
 
-const { TxAPI } = require('..')
+import { TxAPI } from '../src/index'
 
-const SimpleAPI = require('./simple')
+import { SimpleAPI } from './simple'
 
 class JsonSchemaData extends db.Model {
   static KEY = { id: S.str.min(1) }
@@ -218,7 +218,7 @@ class JsonSchemaAPI extends SimpleAPI {
   }
 }
 
-module.exports = {
+export {
   DBWithTXAPI,
   JsonSchemaAPI,
   RememberingTooMuchAPI,
