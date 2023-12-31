@@ -1,8 +1,8 @@
 import zlib from 'node:zlib'
 
-import got from 'got'
+import realGot from 'got'
 
-export default (options) => {
+export default (options, mockedGot) => {
   options = {
     decompress: true,
     ...options
@@ -25,5 +25,6 @@ export default (options) => {
       headers['content-encoding'] = 'br'
     }
   }
+  const got = mockedGot ?? realGot
   return got(options)
 }
