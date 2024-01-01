@@ -9,7 +9,7 @@
             "outputSourceFiles": true
         },
         "useCollapsibles": true,
-        "name": "Fastify Firestore App Guide"
+        "name": "Fastify Firestore Service Guide"
     },
     "opts": {
         "access": "protected,public,undefined",

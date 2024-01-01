@@ -344,7 +344,7 @@ export default class API {
    * @param {Map<String, String>} qsParams query string parameters
    *
    * @param {callAPIOptions} options describe the HTTP request to make
-   * @returns
+   * @returns {Object|string} the HTTP response body, parsed if it was JSON
    */
   async callAPI ({
     method = 'POST', headers = {}, url, body, qsParams

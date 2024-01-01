@@ -54,7 +54,7 @@ class WhatTimeIsItAPI extends API {
 
 
 ## API Input Data
-Todea APIs can receive input data from a JSON-formatted HTTP request body. API
+APIs can receive input data from a JSON-formatted HTTP request body. API
 input MUST ALWAYS be validated. To streamline this, API inputs must be
 described using [Todea schema](https://github.com/pocketgems/schema) (`S`)
 like this:
@@ -62,7 +62,7 @@ like this:
 class AddNumbersAPI extends API {
   static PATH = '/add'
   static DESC = 'returns the sum of a bunch of numbers'
-  // this API only takes numbers and arrays of numbers, but Todea schema
+  // this API only takes numbers and arrays of numbers, but a schema
   // can describe arbitrary JSON data including complex objects
   static BODY = {
     num1: S.double.desc('some number'),
@@ -111,7 +111,7 @@ static BODY = S.obj({
 ```
 
 ## API Output Data
-Todea APIs can send output data in a JSON-formatted HTTP response body. To do
+APIs can send output data in a JSON-formatted HTTP response body. To do
 this, simply return an object from the `computeResponse()` method:
 ```javascript <!-- embed:../examples/docs.js:scope:class ReplyWithValidatedObjectAPI:when an object is returned -->
   // when an object is returned, it is automatically converted to a JSON string
@@ -356,7 +356,7 @@ function (not called if the transaction fails to commit):
 Transactions sometimes retry due to contention, etc. It's important to not
 store state on `this`, `req` or other heap variables while your transaction
 runs, and then reference that data in a retry on accident.
-```javascript <!-- embed:../examples/tx.js:scope:RememberingTooMuchAPI -->
+```javascript <!-- embed:../examples/db.js:scope:RememberingTooMuchAPI -->
 class RememberingTooMuchAPI extends DatabaseAPI {
   static NAME = 'unwise memory use'
   static DESC = 'shares state across tx attempts and requests'
