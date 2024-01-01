@@ -331,8 +331,10 @@ export default class API {
   async callAPI ({
     method = 'POST', headers = {}, url, body, qsParams
   }) {
-    headers = { ...headers } // copy so we can modify it
-    this.addHeadersToForward(headers)
+    headers = {
+      ...headers,
+      ...this.getHeadersToForward()
+    }
     const request = {
       headers,
       method,
@@ -360,21 +362,20 @@ export default class API {
   }
 
   /**
-   * Adds (overwrites) headers with any header values from this request that
-   * should be forwarded.
-   * @param {Object} headers HTTP headers
+   * Gets headers from this request that should be forwarded.
    */
-  addHeadersToForward (headers) {
+  getHeadersToForward () {
     // forward permission headers, if present
+    const ret = {}
     const headersToForward = this.constructor._HEADERS_TO_FORWARD
     for (let i = 0; i < headersToForward.length; i++) {
       const header = headersToForward[i]
       const headerValue = this.req.headers[header]
       if (headerValue !== undefined) {
-        headers[header] = headerValue
+        ret[header] = headerValue
       }
     }
-    return headers
+    return ret
   }
 
   /**
@@ -407,8 +408,13 @@ export default class API {
       const { values, domain, name } = cookie
       // istanbul ignore next
       const cookieDomain = isLocalhost ? '' : domain
-      this.addHeadersToForward(values)
-      this.__reply.setCookie(name, JSON.stringify(values ?? {}), {
+      // any headers which should be forwarded are added to the cookie (these
+      // overwrite existing values with those names, if any)
+      const newCookieData = JSON.stringify({
+        ...(values ?? {}),
+        ...this.getHeadersToForward()
+      })
+      this.__reply.setCookie(name, newCookieData, {
         domain: cookieDomain,
         maxAge: 604800, // one week
         path: '/',
