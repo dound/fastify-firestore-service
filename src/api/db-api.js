@@ -1,4 +1,4 @@
-import db from 'firestoredb'
+import db from 'firestore-orm'
 
 import API from './api'
 

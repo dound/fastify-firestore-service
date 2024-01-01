@@ -1,7 +1,7 @@
 {
-  "name": "@pocketgems/app",
+  "name": "fastify-firestore-service",
   "version": "0.0.15",
-  "description": "Todea App Library",
+  "description": "Web Framework using Fastify and Firestore ORM",
   "license": "Apache-2.0",
   "type": "module",
   "engines": {
@@ -10,10 +10,10 @@
   "exports": "./src/index.js",
   "scripts": {
     "build-doc": "./docs/build.sh",
-    "debug": "yarn start-local-db; ./node_modules/nodemon/bin/nodemon.js --no-lazy --legacy-watch --watch ./src --watch ./examples --watch ./test --inspect=9229 ./node_modules/jest/bin/jest.js --coverage --config=./jest.config.json --runInBand",
-    "test": "yarn start-local-db; node --experimental-vm-modules ./node_modules/jest/bin/jest.js --coverage --config=./jest.config.json",
+    "debug": "./node_modules/nodemon/bin/nodemon.js --no-lazy --legacy-watch --watch ./src --watch ./examples --watch ./test --inspect=9229 ./node_modules/jest/bin/jest.js --coverage --config=./jest.config.json --runInBand",
+    "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --config=./jest.config.json --coverage",
     "setup": "yarn && pip install -r requirements.txt",
-    "start-local-db": "yarn --cwd ./node_modules/firestoredb setup; yarn --cwd ./node_modules/firestore start-local-db"
+    "start-local-db": "./node_modules/firestore-orm/scripts/start-local-db.sh"
   },
   "contributors": [
     "David Underhill",
@@ -21,10 +21,6 @@
     "Solaman Huq",
     "Shimul Bhowmik"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/pocketgems/app"
-  },
   "files": [
     "src/**",
     "!src/app.js",
@@ -58,7 +54,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^5.0.0",
-    "firestoredb": "dound/firestoredb#bcac77191aa73cc2283739ffec0fdd4df4efb826",
+    "firestore-orm": "dound/firestore-orm#bc28276f98b184335b6623ccb104e1e3b5c5ecc0",
     "jest": "^29.7.0",
     "jsdoc": "4.0.2",
     "license-webpack-plugin": "^4.0.2",

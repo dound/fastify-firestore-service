@@ -271,7 +271,7 @@ class NonStandardResponse extends RequestDone {
 
 ## Database Transactions
 `DatabaseAPI` wraps your request in a database transaction context from the
-[FirestoreDB library](https://github.com/dound/firestoredb):
+[Firestore ORM library](https://github.com/dound/firestore-orm):
 ```javascript
 class SomeAPI extends DatabaseAPI {
   static IS_READ_ONLY = false
@@ -301,7 +301,7 @@ object:
 
 Note: If you leave the API read-only and add the `inconsistentReads: true` to
 `CONTEXT_OPTIONS` then the database context will not be a transaction. See
-FirestoreDB library's documentation for more detail.
+Firestore ORM library's documentation for more detail.
 
 
 ### Pre and Post Commit Processing

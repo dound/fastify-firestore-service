@@ -27,7 +27,7 @@ enterprise scale applications supporting millions of users.
   - Compression
   - Health check API
   - Advanced error handling
-  - Works with the [FirestoreDB library](https://github.com/dound/firestoredb)
+  - Works with the [Firestore ORM library](https://github.com/dound/firestore-orm)
 - SDK Generation
   - Swagger UI
   - OpenAPI SDK

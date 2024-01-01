@@ -1,7 +1,7 @@
 import assert from 'node:assert'
 
 import S from '@pocketgems/schema'
-import db from 'firestoredb'
+import db from 'firestore-orm'
 import { v4 as uuidv4 } from 'uuid'
 
 import { DatabaseAPI } from '../src/index'
