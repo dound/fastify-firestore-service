@@ -197,7 +197,7 @@ class JsonSchemaAPI extends SimpleAPI {
   static BODY = { modelCount: S.int }
   async computeResponse () {
     const modelIdx = Math.floor(Math.random() * this.req.body.modelCount)
-    await db.Transaction.run(async tx => {
+    await db.Context.run(async tx => {
       const data = {
         id: 'model' + modelIdx.toString(),
         json: { bar: { foo: {}, foo1: { key: { zoo: 1, zoo1: 2 } }, foo2: 3 } }
