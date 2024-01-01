@@ -26,9 +26,19 @@
         ]
     },
     "cSpell.words": [
+        "brotli",
+        "concat",
+        "dound",
         "fastify",
         "firestore",
+        "leaderboard",
+        "pino",
+        "redir",
         "registrator",
+        "retryable",
+        "traceback",
+        "unmocked",
+        "UNVALIDATED",
         "uuidv"
     ]
 }

@@ -258,7 +258,7 @@ class SomeFakeWebAppAPI extends DatabaseAPI {
   }
 }
 
-class AuthentationAPI extends API {
+class AuthenticationAPI extends API {
   static PATH = '/auth'
   static DESC = 'Testing authentication errors'
 
@@ -281,7 +281,7 @@ class AuthentationAPI extends API {
 }
 
 export {
-  AuthentationAPI,
+  AuthenticationAPI,
   CallAPIAPI,
   DefaultValueAPI,
   MissingNoReturnValueAPI,

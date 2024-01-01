@@ -196,7 +196,7 @@ class DocsTest extends BaseAppTest {
     await check(400, 'RequestError', 'does not matter')
     await check(500, 'RequestError', 'does not matter')
     await check(500, 'RequestInvalidReturn', 'nothrow')
-    // preCommit throwing after success should work ... the transdaction should
+    // preCommit throwing after success should work ... the transaction should
     // NOT commit in this case!
     await check(407, 'RequestOkay', 'RequestError')
   }
