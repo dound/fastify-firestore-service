@@ -22,6 +22,7 @@ This library is used to define APIs.
   - [One-Time Setup](#one-time-setup)
   - [Asynchronous Processing](#asynchronous-processing)
   - [Cross Origin (CORS)](#cross-origin-cors)
+  - [Calling other APIs](#calling-other-apis)
 - [Niche Concepts](#niche-concepts)
   - [Other API Input Data Options](#other-api-input-data-options)
   - [Custom Middleware](#custom-middleware)
@@ -534,6 +535,12 @@ You may also set the API to allow any origin like this:
 ```js
 static CORS_ORIGIN = '*'
 ```
+
+## Calling other APIs
+* If you want to have one API call another, see the `callAPI()` helper method.
+* If you want to have your API redirect to a web application and optionally
+  pass some information in a cookie, see the `redirectToWebApp()` helper method.
+
 
 # Niche Concepts
 This section explains niche functionality.
