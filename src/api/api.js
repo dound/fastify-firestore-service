@@ -30,19 +30,6 @@ function pruneUndefined (obj) {
 }
 
 /**
-   * Takes API level properties and generates JSON configurations to use
-   * when registering the API with fastify.
-   *
-   * @param {API} api API to generate configurations for.
-  */
-function generateRegistrationOptions (api) {
-  const ret = {
-    attachValidation: true
-  }
-  return ret
-}
-
-/**
  * Public APIs (accessible without any user credentials) should be defined as
  * a subclass of @this.
  *
@@ -738,7 +725,7 @@ class API {
     const method = this.METHOD.toLowerCase()
     fastify[method](fullPath, {
       schema: this.swaggerSchema,
-      ...generateRegistrationOptions(this)
+      attachValidation: true
     },
     async (req, reply) => {
       let ret
