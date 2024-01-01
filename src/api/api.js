@@ -56,7 +56,7 @@ function generateRegistrationOptions (api) {
  * @public
  * @class
  */
-export default class API {
+class API {
   /**
    * The API's human-readable name.
    *
@@ -769,3 +769,5 @@ export default class API {
     })
   }
 }
+
+export default API

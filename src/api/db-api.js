@@ -19,7 +19,7 @@ class TransactionAborted extends Error {
  * @public
  * @class
  */
-export default class DatabaseAPI extends API {
+class DatabaseAPI extends API {
   static IS_READ_ONLY = true
   static CONTEXT_OPTIONS = {}
 
@@ -91,3 +91,5 @@ export default class DatabaseAPI extends API {
    */
   async postCommit (respData) { return respData }
 }
+
+export default DatabaseAPI
