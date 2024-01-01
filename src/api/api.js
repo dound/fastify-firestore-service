@@ -328,6 +328,24 @@ export default class API {
     assert.fail('API not implemented')
   }
 
+  /**
+   * Call an API.
+   *
+   * Any headers to forward (that were sent to the request which is calling
+   * this function) will be added to the headers specified.
+   *
+   * @typedef {Object} callAPIOptions
+   * @param {String} method The HTTP method to use
+   * @param {Map<String, String>} headers HTTP headers to send
+   * @param {String} url the URL to request
+   * @param {String} body the body to send (if it's a string, it is sent as-is;
+   *   otherwise, it is assumed to be JSON and encoded as such and the
+   *   appropriate Content-Type header is set)
+   * @param {Map<String, String>} qsParams query string parameters
+   *
+   * @param {callAPIOptions} options describe the HTTP request to make
+   * @returns
+   */
   async callAPI ({
     method = 'POST', headers = {}, url, body, qsParams
   }) {
@@ -386,15 +404,18 @@ export default class API {
   }
 
   /**
-   * Redirects to the URL hosting the specified web application.
-   * @param {Object} [qparams] the query string parameters to launch with
-   * @param {String} [service] the service the web application belongs to
-   * @param {String} [version] the version of the web application to launch;
+   * Redirects to a URL optionally with query string and cookie.
+   *
+   * Any headers to forward (that were sent to the request which is calling
+   * this function) will be added to the existing cookie's JSON data, if any.
+   *
+   * @param {String} [schemeAndHost] e.g., https://my-webapp.example.com
+   * @param {String} [path] the version of the web application to launch;
    *   can be overridden by query parameter "version" but otherwise defaults to
    *   the version of the service which served the web app
-   * @param {Object} [cookieValues] values to pass in a cookie (good for
-   *   sensitive values which should not be passed in in qparams, and for
-   *   values which need to included with Todea HTTP requests the app makes)
+   * @param {Object} [qsParams] the query string parameters to launch with
+   * @param {Object} [cookie] cookie data to send (good for sensitive values
+   *   which should not be passed in the query string)
    */
   redirectToWebApp ({
     schemeAndHost,
