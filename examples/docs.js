@@ -76,7 +76,7 @@ class WhatTimeIsItAPI extends API {
 class AddNumbersAPI extends API {
   static PATH = '/add'
   static DESC = 'returns the sum of a bunch of numbers'
-  // this API only takes numbers and arrays of numbers, but Todea schema
+  // this API only takes numbers and arrays of numbers, but a schema
   // can describe arbitrary JSON data including complex objects
   static BODY = {
     num1: S.double.desc('some number'),

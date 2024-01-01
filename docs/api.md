@@ -1,5 +1,5 @@
 # API Definition Library <!-- omit in toc -->
-This library is used to define Todea APIs.
+This library is used to define APIs.
 
 ## Topics
 - [Core Concepts](#core-concepts)

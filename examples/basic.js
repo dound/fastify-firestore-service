@@ -249,7 +249,7 @@ class SomeFakeWebAppAPI extends DatabaseAPI {
       params.qsParams = {}
     }
     if (req.query.useCookie || req.query.defineCustomCookie) {
-      params.cookie = { name: 'todea', domain: 'example.com' }
+      params.cookie = { name: 'exampleName', domain: 'example.com' }
     }
     if (req.query.defineCustomCookie) {
       params.cookie.values = { x: 7 }

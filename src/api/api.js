@@ -453,8 +453,8 @@ export default class API {
     this.__reply.redirect(schemeAndHost + path + qStr)
   }
 
-  static async register (registrator) {
-    await registrator.registerAPI(this)
+  static async register (registrar) {
+    await registrar.registerAPI(this)
   }
 
   /**
@@ -470,8 +470,8 @@ export default class API {
    * @param {String} service The service this API belongs to.
    * @package
    */
-  static registerAPI (registrator) {
-    const { app, service } = registrator
+  static registerAPI (registrar) {
+    const { app, service } = registrar
     if (this.setup) {
       app.register(this.setup)
     }

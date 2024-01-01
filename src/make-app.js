@@ -1,6 +1,6 @@
 import fastify from 'fastify'
 
-import ComponentRegistrator from './component-registrator'
+import ComponentRegistrar from './component-registrar'
 import makeLogger from './make-logger'
 import compressPlugin from './plugins/compress'
 import contentParserPlugin from './plugins/content-parser'
@@ -77,7 +77,7 @@ const LATENCY_TRACKER_CONFIG = {
 const PARAMS_CONFIG = {
   service: undefined,
   components: undefined,
-  RegistratorCls: ComponentRegistrator,
+  RegistrarCls: ComponentRegistrar,
   cookie: {},
   healthCheck: {},
   latencyTracker: {},
@@ -107,8 +107,8 @@ function loadConfigDefault (config, defaultConfig) {
  *   user-id, leaderboard. This affects API's prefixes.
  * @param {Array<API|Model|component>} params.components A list of
  *   components.
- * @param {object} [params.RegistratorCls=ComponentRegistrator] A subclass of
- *   ComponentRegistrator
+ * @param {object} [params.RegistrarCls=ComponentRegistrar] A subclass of
+ *   ComponentRegistrar
  * @param {CookieConfig} [params.cookie] Configures fastify-cookie.
  * @param {HealthCheckConfig} [params.healthCheck] Configures health check endpoint.
  * @param {LatencyTrackerConfig} [params.latencyTracker]
@@ -116,7 +116,7 @@ function loadConfigDefault (config, defaultConfig) {
  * @param {SwaggerConfig} [params.swagger] Configures swagger.
  * @returns {Promise<server>} fastify app with configured plugins
  */
-export default async function makeApp (params = {}) {
+export default async function makeService (params = {}) {
   const configs = [
     [() => params, PARAMS_CONFIG],
     [() => params.cookie, COOKIE_CONFIG],
@@ -131,7 +131,7 @@ export default async function makeApp (params = {}) {
   const {
     service,
     components,
-    RegistratorCls,
+    RegistrarCls,
     cookie,
     healthCheck,
     latencyTracker,
@@ -153,7 +153,7 @@ export default async function makeApp (params = {}) {
     }
   })
 
-  const registrator = new RegistratorCls(app, service)
+  const registrar = new RegistrarCls(app, service)
 
   app.register(cookiePlugin, { cookie })
     .register(compressPlugin)
@@ -165,6 +165,6 @@ export default async function makeApp (params = {}) {
     .register(healthCheckPlugin, { healthCheck })
     .register(swaggerPlugin, { swagger: { service, ...swagger } })
 
-  await registrator.registerComponents(components)
+  await registrar.registerComponents(components)
   return app
 }

@@ -1,8 +1,8 @@
-import { makeApp } from '../src/index'
+import { makeService } from '../src/index'
 
 import { BaseTest, runTests } from './base-test'
 
-class MakeAppTest extends BaseTest {
+class makeServiceTest extends BaseTest {
   async testValidation () {
     const commonConfig = {
       service: 'test',
@@ -10,16 +10,16 @@ class MakeAppTest extends BaseTest {
       cookie: { disabled: true },
       healthCheck: { disabled: true }
     }
-    await expect(makeApp())
+    await expect(makeService())
       .rejects.toThrow('Missing required value for service')
-    await expect(makeApp({ ...commonConfig, cookie: { invalid: false } }))
+    await expect(makeService({ ...commonConfig, cookie: { invalid: false } }))
       .rejects.toThrow('Unknown config invalid')
-    await expect(makeApp({ ...commonConfig, cookie: { disabled: false } }))
+    await expect(makeService({ ...commonConfig, cookie: { disabled: false } }))
       .rejects.toThrow('Missing required value for')
-    await makeApp({
+    await makeService({
       ...commonConfig
     })
   }
 }
 
-runTests(MakeAppTest)
+runTests(makeServiceTest)

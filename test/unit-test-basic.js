@@ -33,13 +33,13 @@ async function checkAPIRegisterWithErr (cls, errMsgOrError, moreOptions) {
     }
   }
 
-  const fakeRegistrator = {
-    registerAPI: (api) => api.registerAPI(fakeRegistrator),
+  const fakeRegistrar = {
+    registerAPI: (api) => api.registerAPI(fakeRegistrar),
     app: fakeApp,
     serviceName: 'badlydefinedservice'
   }
 
-  await cls.register(fakeRegistrator)
+  await cls.register(fakeRegistrar)
   expect(async () => { await fakeApp.promise }).rejects.toEqual(expError)
 }
 
@@ -68,10 +68,11 @@ async function checkRedirToWebApp (fastify, apiPath, app, headersToFwd = {}) {
     if (useCookie || defineCustomCookie) {
       const cookies = headers['set-cookie']
       expect(cookies.length).toBe(1)
-      expect(cookies[0]).toMatch(/todea=.*; Max-Age=604800; Path=\//)
+      expect(cookies[0]).toMatch(/exampleName=.*; Max-Age=604800; Path=\//)
       const data = cookies[0].split(';')[0]
-      expect(data.substring(0, 6)).toBe('todea=')
-      const decodedDataAndSig = decodeURIComponent(data.substring(6))
+      const cutoffIdx = 12
+      expect(data.substring(0, cutoffIdx)).toBe('exampleName=')
+      const decodedDataAndSig = decodeURIComponent(data.substring(cutoffIdx))
       const sigStartIdx = decodedDataAndSig.lastIndexOf('.')
       const decodedData = decodedDataAndSig.substring(0, sigStartIdx)
       console.log(decodedData)

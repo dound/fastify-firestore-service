@@ -5,7 +5,7 @@ import { BaseTest, runTests } from '@pocketgems/unit-test'
 import superagentDefaults from 'superagent-defaults'
 import supertest from 'supertest'
 
-import makeApp from '../src/app'
+import makeService from '../src/app'
 
 let FASTIFY_CACHE
 
@@ -16,7 +16,7 @@ afterAll(async () => {
 
 class BaseAppTest extends BaseTest {
   async beforeAll () {
-    this.fastify = FASTIFY_CACHE ?? await makeApp()
+    this.fastify = FASTIFY_CACHE ?? await makeService()
     FASTIFY_CACHE = this.fastify
 
     await Promise.all([super.beforeAll(), this.fastify.ready()])

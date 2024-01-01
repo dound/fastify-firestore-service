@@ -1,14 +1,13 @@
-# Todea App Library <!-- omit in toc -->
-Todea App library is a backend framework designed to streamline Node.js
-development workflow for your side project, then seamlessly transition to
-enterprise scale applications supporting millions of users.
+# Fastify Firestore Service <!-- omit in toc -->
+This is a backend web framework built on Fastify and our Firestore ORM. It
+provides a way to define APIs, including managing data.
 
 ## Topics <!-- omit in toc -->
 - [Key Features](#key-features)
 - [Getting Started](#getting-started)
   - [Creating An API](#creating-an-api)
-  - [Creating An App](#creating-an-app)
-  - [Starting Server](#starting-server)
+  - [Creating a Service](#creating-a-service)
+  - [Running a Server](#running-a-server)
 - [Components](#components)
   - [Customizing Component Registration](#customizing-component-registration)
 - [Unit testing](#unit-testing)
@@ -18,25 +17,19 @@ enterprise scale applications supporting millions of users.
   - [OpenAPI SDKs](#openapi-sdks)
 
 # Key Features
-- High level [API library](docs/api.md)
+- [API library](docs/api.md)
   - Routing
-  - Input, output schema
-  - Exceptions
+  - Schemas for API inputs and responses
   - CORS
-  - Authentication
   - Compression
   - Health check API
   - Advanced error handling
   - Works with the [Firestore ORM library](https://github.com/dound/firestore-orm)
-- SDK Generation
-  - Swagger UI
-  - OpenAPI SDK
 
 # Getting Started
-The Todea App library provides a way to define APIs, including managing data.
 
 ## Creating An API
-You can create an API to look up order details like this:
+You can create an API to fetch information from Firestore like this:
 ```js
 import { DatabaseAPI, EXCEPTIONS } from 'dound/fastify-app'
 
@@ -63,12 +56,13 @@ class GetOrderAPI extends DatabaseAPI {
 }
 ```
 
-You can read more about API interface [here](docs/api.md).
+You can read more about the API interface [here](docs/api.md).
 
-## Creating An App
-To create a Todea app, you have to call `makeApp` like this:
+## Creating a Service
+A service is just a server which hosts some HTTP APIs. To create a service, you
+call `makeService` like this:
 ```js
-import { makeApp } from 'dound/fastify-app'
+import { makeService } from 'dound/fastify-app'
 
 const components = {
   Order,
@@ -76,15 +70,9 @@ const components = {
 }
 ```
 ```javascript <!-- embed:src/app.js:section:example start:example end -->
-export default async () => makeApp({
+export default async () => makeService({
   service: 'unittest',
-  components: {
-    ...basicExamples,
-    ...corsExamples,
-    ...dbExamples,
-    ...docsExamples,
-    notAPI: {}
-  },
+  components,
   cookie: {
     secret: 'unit-test'
   },
@@ -95,30 +83,30 @@ export default async () => makeApp({
   },
   swagger: {
     disabled: false,
-    authHeaders: ['x-app', 'x-uid', 'x-admin', 'x-token'],
+    authHeaders: ['x-app', 'x-uid'],
     servers: ['http://localhost:8080'],
     routePrefix: '/app/docs'
   }
 })
 ```
 
-## Starting Server
-The `makeApp()` helper method creates a fastify instance with a few plugins
+## Running a Server
+The `makeService()` helper method creates a fastify instance with a few plugins
 loaded already. You may customize the fastify instance further using fastify's
 customization features. To start the app, you have to call `.listen()` according
 to
 [Fastify's documentation](https://www.fastify.io/docs/latest/Reference/Server/#listen).
-For example, `makeApp()` is called in a `app.js` file, and the returned promise
-is exported, then you write the following code to create a server:
+For example, `makeService()` is called in a `app.js` file, and the returned promise
+is exported, then you write the following code to start a server:
 ```javascript <!-- embed:examples/server.js:section:example start:example end -->
-const app = await makeApp()
+const app = await makeService()
 app.listen({ port: 8090, host: '0.0.0.0' })
 ```
 
 # Components
-Todea app is composed of components. A Todea app component can be an API, DB
-Collection, etc. These components are passed to `makeApp()` in an object as `components`.
-For example, `components` may be initialized like this:
+A service is composed of components. A component can be an API, a DB Model,
+etc. These components are passed to `makeService()` which calls the
+`register()` method on each component so that it can do any setup it requires:
 
 ```js
 const components = {
@@ -126,54 +114,51 @@ const components = {
   GetOrderAPI
 }
 
-makeApp({
+makeService({
   components,
   ...
 })
 ```
 
-Internally, each of these components get registered to a corresponding system.
-For example, API is registered with fastify as a route. Other components may
-use Terraform if Infrastructure-As-Code is required.
+For example, API's register with fastify as a route.
 
 ## Customizing Component Registration
 The component system uses a visitor pattern to allow extending the registration
 workflow with custom components. For example, to add a new type of component
 `ExampleComponent`, you need to do the following:
-1. Subclass `ComponentRegistrator`, and add a
+1. Subclass `ComponentRegistrar`, and add a
    `registerExampleComponent (exampleComponent)` method
    ```js
-   import { ComponentRegistrator } from 'dound/fastify-app'
+   import { ComponentRegistrar } from 'dound/fastify-app'
 
-   class CustomComponentRegistrator extends ComponentRegistrator {
+   class CustomComponentRegistrar extends ComponentRegistrar {
        registerExampleComponent (exampleComponent) {
            // do what needs to be done
        }
    }
    ```
-1. You can pass the new `CustomComponentRegistrator` class to
-   [makeApp()](./make-app.md) like this
+1. You can pass the new `CustomComponentRegistrar` class to
+   [makeService()](./make-app.md) like this
    ```js
-   makeApp({
-       RegistratorCls: CustomComponentRegistrator
+   makeService({
+       RegistrarCls: CustomComponentRegistrar
    })
    ```
-1. Implement `static register (registrator)` in the new `ExampleComponent` class
+1. Implement `static register (registrar)` in the new `ExampleComponent` class
    ```js
    class ExampleComponent {
-       static register (registrator) {
-           registrator.registerExampleComponent(this)
+       static register (registrar) {
+           registrar.registerExampleComponent(this)
        }
    }
    ```
 1. Pass the new type of component as part of `components` like this
-   `makeApp({ components: { ExampleComponent } })`
+   `makeService({ components: { ExampleComponent } })`
 
 # Unit testing
 ## Setup
-Apps store data in Firestore. You must setup the database before running tests.
-You can run `yarn start-local-db` to start a local emulator. And use
-`test/environment.js` to setup Jest environments.
+Apps store data in Firestore. You must start the Firestore emulator before
+running tests. You can run `yarn start-local-db` to start the local emulator.
 
 # Generating SDKs
 ## Swagger UI

@@ -3,18 +3,20 @@ import * as corsExamples from '../examples/cors'
 import * as dbExamples from '../examples/db'
 import * as docsExamples from '../examples/docs'
 
-import { makeApp } from './index'
+import { makeService } from './index'
+
+const components = {
+  ...basicExamples,
+  ...corsExamples,
+  ...dbExamples,
+  ...docsExamples,
+  notAPI: {}
+}
 
 // example start
-export default async () => makeApp({
+export default async () => makeService({
   service: 'unittest',
-  components: {
-    ...basicExamples,
-    ...corsExamples,
-    ...dbExamples,
-    ...docsExamples,
-    notAPI: {}
-  },
+  components,
   cookie: {
     secret: 'unit-test'
   },
@@ -25,7 +27,7 @@ export default async () => makeApp({
   },
   swagger: {
     disabled: false,
-    authHeaders: ['x-app', 'x-uid', 'x-admin', 'x-token'],
+    authHeaders: ['x-app', 'x-uid'],
     servers: ['http://localhost:8080'],
     routePrefix: '/app/docs'
   }

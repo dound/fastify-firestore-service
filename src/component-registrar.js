@@ -1,4 +1,4 @@
-export default class ComponentRegistrator {
+export default class ComponentRegistrar {
   apis = []
 
   constructor (app, service) {
