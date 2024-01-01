@@ -31,7 +31,7 @@ class DBLibTest extends BaseAppTest {
       .send('{d}')
       .set('Content-Type', 'application/json')
       .expect(400)
-    expect(result.body.message).toContain('Unexpected token')
+    expect(result.body.message).toMatch(/Expected property name or.*in JSON/)
   }
 
   async testMissingRequiredPropFail () {
