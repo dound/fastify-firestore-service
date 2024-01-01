@@ -184,7 +184,6 @@ class CallAPIAPI extends TxAPI {
     abc: S.str.optional()
   })
 
-  static SDK_GROUP = 'user'
   async computeResponse () {
     return this.callAPI({
       url: 'http://nothing',
@@ -201,7 +200,6 @@ class ReturnBasicValueAPI extends TxAPI {
   static QS = { part1: S.str }
   static BODY = { part2: S.str }
   static RESPONSE = RESPONSES.UNVALIDATED
-  static SDK_GROUP = null
 
   async computeResponse () {
     const pieces = [
@@ -232,7 +230,6 @@ class SomeFakeWebAppAPI extends TxAPI {
   static METHOD = 'GET'
   static DESC = 'pretends to serve a web app'
   static PATH = '/api/someWebApp'
-  static SDK_GROUP = null
   static QS = {
     useCookie: S.bool.default(true),
     defineCustomCookie: S.bool,

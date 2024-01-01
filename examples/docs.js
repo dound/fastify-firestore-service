@@ -202,7 +202,6 @@ class ThrowFromConstructorToReplyAPI extends API {
 class PostComputeResponseWithThrowAPI extends TxAPI {
   static PATH = '/preCommit'
   static DESC = 'tests preCommit()'
-  static SDK_GROUP = null
   static QS = {
     shouldThrow: S.str,
     shouldPreCommitThrow: S.str,

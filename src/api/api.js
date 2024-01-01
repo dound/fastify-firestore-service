@@ -110,13 +110,6 @@ export default class API {
   }
 
   /**
-   * Defines which SDK this API should be part of. Can be 'user', 'admin',
-   * 'service' or null.
-   * @public
-   */
-  static SDK_GROUP = null
-
-  /**
    * Whether this API should have pagination parameters attached automatically.
    * When true, the API will have 'nextToken' field attached to the QS and
    * RESPONSE, and 'amount' field attached to QS automatically. To enable

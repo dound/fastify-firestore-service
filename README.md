@@ -33,12 +33,10 @@ enterprise scale applications supporting millions of users.
 - SDK Generation
   - Swagger UI
   - OpenAPI SDK
-  - AWS SDK & CLI compatible
 
 # Getting Started
-With Todea App library, you can define database schemas, create several APIs,
-and have a procedurally generated SDK ready for client and frontend consumption
-within hours.
+The Todea App library provides a way to define APIs, including managing
+Firestore interactions.
 
 ## Creating A Database Table
 You can create a database table with a few lines of code:

@@ -54,7 +54,6 @@ class DBWithTXAPI extends TxAPI {
   static PATH = '/dbWithTxAPI'
   static IS_READ_ONLY = false
   static CONTEXT_OPTIONS = { retries: 3 }
-  static SDK_GROUP = null
   static BODY = {
     id: S.str,
     delta: S.int,
@@ -136,7 +135,6 @@ class RememberingTooMuchAPI extends TxAPI {
   static PATH = '/overshare'
   static IS_READ_ONLY = false
   static CONTEXT_OPTIONS = { retries: 3 }
-  static SDK_GROUP = null
   static BODY = {
     numTries: S.int.min(0)
   }

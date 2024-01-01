@@ -104,8 +104,7 @@ function loadConfigDefault (config, defaultConfig) {
 /**
  * @param {Object} params
  * @param {string} params.service Name of the service, for example, iam,
- *   user-id, leaderboard. This affects API's prefixes, as well as generated
- *   AWS-like SDK's ID.
+ *   user-id, leaderboard. This affects API's prefixes.
  * @param {Array<API|Model|component>} params.components A list of
  *   components.
  * @param {object} [params.RegistratorCls=ComponentRegistrator] A subclass of

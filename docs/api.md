@@ -26,10 +26,8 @@ This library is used to define Todea APIs.
   - [Pagination](#pagination)
   - [Other API Input Data Options](#other-api-input-data-options)
   - [Non-app specific APIs](#non-app-specific-apis)
-  - [Controlling API Visibility in SDKs](#controlling-api-visibility-in-sdks)
   - [Custom Middleware](#custom-middleware)
   - [Gotcha: Sharing Schemas](#gotcha-sharing-schemas)
-  - [Gotcha: Response for APIs included in SDKs must be objects](#gotcha-response-for-apis-included-in-sdks-must-be-objects)
   - [Localhost Cross-Origin Resource Sharing (CORS)](#localhost-cross-origin-resource-sharing-cors)
 - [Appendix](#appendix)
 
@@ -361,7 +359,6 @@ class RememberingTooMuchAPI extends TxAPI {
   static PATH = '/overshare'
   static IS_READ_ONLY = false
   static CONTEXT_OPTIONS = { retries: 3 }
-  static SDK_GROUP = null
   static BODY = {
     numTries: S.int.min(0)
   }
@@ -701,29 +698,6 @@ app, then this requirement can be removed:
 static IS_APP_HEADER_REQUIRED = false
 ```
 
-
-## Controlling API Visibility in SDKs
-Some APIs are meant to be consumed by client applications (UserAPIs), while
-some are meant to be consumed by admin tools (AdminAPIs), and yet some are
-meant to be consumed by peer Todea services (InternalAPIs). APIs are
-grouped together by the intended consumer using the `SDK_GROUP` flag.
-```javascript
-  static SDK_GROUP = 'user'
-  // or
-  static SDK_GROUP = 'service'
-  // or
-  static SDK_GROUP = 'admin'
-```
-
-Some APIs may not be intended to be consumed by any SDK. For example, an URI
-for resetting password may only be intended to be consumed via a web browser.
-You can prevent the API from being included in SDKs (keeping the SDK
-smaller an bd simpler) by setting the flag to `null`:
-```javascript
-  static SDK_GROUP = null
-```
-
-
 ## Custom Middleware
 If desired, each API can be run with custom middleware and other fastify
 options. To do this, you'll need to override the `register()` method and
@@ -747,18 +721,6 @@ the object. They each need their own copy of the schema (which the getter
 creates and returns). If they both built from the same copy, it would cause
 internal problems with the schema object.
 
-
-## Gotcha: Response for APIs included in SDKs must be objects
-Todea SDKs require response types to be JSON objects. This is a best practice
-because it makes it easier to add additional data to the response as the API
-evolves without breaking compatibility with older clients. It's also a
-technical limitation because the tech on which our SDKs are built currently
-only supports JSON response types.
-
-In case of an error like "API XYZ response must be object", you can do one of
-the following:
-1. Define response as an object, e.g. `static RESPONSE = { result: ... }`
-2. Remove the API from SDK, e.g. `static SDK_GROUP = null`
 
 ## Localhost Cross-Origin Resource Sharing (CORS)
 When running a service locally for testing purposes, it will enable CORS

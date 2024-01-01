@@ -17,7 +17,6 @@ class CrossOneOriginAPI extends TxAPI {
   static DESC = 'with app header'
   static PATH = '/api/cors/one'
   static CORS_ORIGIN = 'some.example.com'
-  static SDK_GROUP = null
   static get CORS_HEADERS () {
     return [...super.CORS_HEADERS, 'x-key']
   }
@@ -30,7 +29,6 @@ class CrossNoAppOriginAPI extends TxAPI {
   static DESC = 'without app header'
   static PATH = '/api/cors/noAppHeader'
   static CORS_ORIGIN = 'some.example.com'
-  static SDK_GROUP = null
   static get CORS_HEADERS () { return [...super.CORS_HEADERS, 'X-More'] }
   async computeResponse () { /* no-op */ }
 }

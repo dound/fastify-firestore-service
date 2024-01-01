@@ -149,9 +149,7 @@ class RequestError extends __RequestDone {
 }
 
 /**
- * Thrown when a redirect is required. RedirectException is a subclass of
- * RequestError, because AWS SDKs don't support more than one success
- * responses, and they are using exceptions to handle redirects already.
+ * Thrown when a redirect is required.
  */
 class RedirectException extends RequestError {
   static STATUS = 302
