@@ -8,6 +8,7 @@ function gotWrapper (options, mockedGot) {
     ...options
   }
   if (options.compress) {
+    // make a copy of the headers obj before we make changes to it
     const headers = {
       ...options.headers
     }
