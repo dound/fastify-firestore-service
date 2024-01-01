@@ -4,6 +4,7 @@ import querystring from 'node:querystring'
 import { jest } from '@jest/globals'
 
 import { RequestValidationAPI } from '../examples/basic'
+import gotWrapper from '../src/got-wrapper'
 import { API, EXCEPTIONS } from '../src/index'
 
 import { BaseAppTest, mockGot, runTests } from './base-test'
