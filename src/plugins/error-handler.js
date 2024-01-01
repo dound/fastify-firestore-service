@@ -2,7 +2,7 @@ import S from '@pocketgems/schema'
 import fp from 'fastify-plugin'
 import { v4 as uuidv4 } from 'uuid'
 
-import { EXCEPTIONS } from '../api'
+import { InvalidInputException } from '../api/exception'
 
 export default fp(function (fastify, options, next) {
   const returnErrorDetail = options.errorHandler.returnErrorDetail
@@ -13,7 +13,7 @@ export default fp(function (fastify, options, next) {
     const errorMessage = error.message.split('\n')
     traceback.splice(0, errorMessage.length)
     let removeFromIdx
-    if (error instanceof EXCEPTIONS.InvalidInputException) {
+    if (error instanceof InvalidInputException) {
       removeFromIdx = 1
     } else {
       for (let i = traceback.length - 1; i > 0; i--) {

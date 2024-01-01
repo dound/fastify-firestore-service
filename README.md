@@ -114,7 +114,14 @@ const components = {
 ```javascript <!-- embed:src/app.js:section:example start:example end -->
 export default async () => makeApp({
   service: 'unittest',
-  components,
+  components: {
+    ...basicExamples,
+    ...corsExamples,
+    ...docsExamples,
+    ...paginationExamples,
+    ...txExamples,
+    notAPI: {}
+  },
   cookie: {
     secret: 'unit-test'
   },

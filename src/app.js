@@ -1,11 +1,22 @@
-import * as components from '../examples/index'
+import * as basicExamples from '../examples/basic'
+import * as corsExamples from '../examples/cors'
+import * as docsExamples from '../examples/docs'
+import * as paginationExamples from '../examples/pagination'
+import * as txExamples from '../examples/tx'
 
 import { makeApp } from './index'
 
 // example start
 export default async () => makeApp({
   service: 'unittest',
-  components,
+  components: {
+    ...basicExamples,
+    ...corsExamples,
+    ...docsExamples,
+    ...paginationExamples,
+    ...txExamples,
+    notAPI: {}
+  },
   cookie: {
     secret: 'unit-test'
   },
