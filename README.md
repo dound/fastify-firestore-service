@@ -116,7 +116,6 @@ export default async () => makeApp({
     ...basicExamples,
     ...corsExamples,
     ...docsExamples,
-    ...paginationExamples,
     ...txExamples,
     notAPI: {}
   },

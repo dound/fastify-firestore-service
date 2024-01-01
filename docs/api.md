@@ -23,7 +23,6 @@ This library is used to define Todea APIs.
   - [Asynchronous Processing](#asynchronous-processing)
   - [Cross Origin (CORS)](#cross-origin-cors)
 - [Niche Concepts](#niche-concepts)
-  - [Pagination](#pagination)
   - [Other API Input Data Options](#other-api-input-data-options)
   - [Non-app specific APIs](#non-app-specific-apis)
   - [Custom Middleware](#custom-middleware)
@@ -541,52 +540,6 @@ static CORS_ORIGIN = '*'
 
 # Niche Concepts
 This section explains niche functionality.
-
-## Pagination
-Paginated APIs break up large responses into small chunks which can be more
-quickly returned for a more responsive user experience. A typical pagination
-API takes a pagination token and amount of data to fetch as input, and returns
-a list of data along with a token for the next page.
-```javascript
-class PaginatedAPI extends API {
-  static BODY = {
-    nextToken: S.str.optional(),
-    amount: S.int.min(1)
-  }
-
-  static RESPONSE = {
-    data: S.arr(S.str),
-    nextToken: S.str.optional()
-  }
-
-  ...
-}
-```
-
-This library simplifies the creation of a paginated API to a single
-`ENABLE_PAGINATION` flag. When enabled, `nextToken` and `amount` fields are
-automatically added to the API's query string (`QS`), and `nextToken` is
-automatically added to the RESPONSE schema. These automatically added fields
-should not be manually added. In addition, `RESPONSE` must have exactly one
-schema field corresponding to an array schema.
-```javascript <!-- embed:../examples/pagination.js:scope:PaginatedAPI -->
-class PaginatedAPI extends API {
-  static DESC = 'Paginated API'
-  static PATH = '/paginated'
-  static ENABLE_PAGINATION = true
-  static RESPONSE = {
-    list: S.arr(S.str)
-  }
-
-  async computeResponse (req) {
-    const { amount, nextToken } = req.query
-    return fetchPage({ amount, nextToken })
-  }
-}
-```
-A paginated API (with ENABLE_PAGINATION = true or manually defined following
-the same schema) has extended paginator support in generated SDKs. See the SDK
-documentation for detail.
 
 ## Other API Input Data Options
 Todea APIs are typically requested via the HTTP POST method. API-specific

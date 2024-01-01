@@ -1,7 +1,6 @@
 import * as basicExamples from '../examples/basic'
 import * as corsExamples from '../examples/cors'
 import * as docsExamples from '../examples/docs'
-import * as paginationExamples from '../examples/pagination'
 import * as txExamples from '../examples/tx'
 
 import { makeApp } from './index'
@@ -13,7 +12,6 @@ export default async () => makeApp({
     ...basicExamples,
     ...corsExamples,
     ...docsExamples,
-    ...paginationExamples,
     ...txExamples,
     notAPI: {}
   },

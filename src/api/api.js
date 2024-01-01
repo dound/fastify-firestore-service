@@ -109,14 +109,6 @@ export default class API {
     return ret.join(' ')
   }
 
-  /**
-   * Whether this API should have pagination parameters attached automatically.
-   * When true, the API will have 'nextToken' field attached to the QS and
-   * RESPONSE, and 'amount' field attached to QS automatically. To enable
-   * pagination, RESPONSE must contain exactly one key with an array schema.
-   */
-  static ENABLE_PAGINATION = false
-
   /* istanbul ignore next */
   /**
    * The HTTP method used to request this API (e.g., GET, POST).
@@ -547,70 +539,7 @@ export default class API {
         static SCHEMA = response
       }
     }
-
-    if (!this.ENABLE_PAGINATION) {
-      return ret
-    }
-
-    if (!ret || !ret.SCHEMA) {
-      throw new Error(
-        `API ${this.name} has no response while pagination is enabled`)
-    }
-
-    if (ret.SCHEMA.nextToken) {
-      throw new Error(
-        `API ${this.name} must not use reserved key "nextToken" in response
-        when pagination is enabled`)
-    }
-
-    const responseKeys = Object.keys(ret.SCHEMA)
-    if (responseKeys.length !== 1) {
-      throw new Error(
-        `API ${this.name} must have one key in response since pagination is
-        enabled`)
-    }
-
-    const schema = ret.SCHEMA[responseKeys[0]].jsonSchema()
-    if (schema.type !== 'array') {
-      throw new Error(
-        `API ${this.name} must have one key that is an array schema when
-        pagination is enabled`)
-    }
-
-    return class extends ret {
-      static SCHEMA = {
-        ...ret.SCHEMA,
-        nextToken: S.str.optional()
-          .desc(`A token used for paginating to the next "amount" of data. Pass
-this value to the nextToken field as input to fetch the next page of data. When
-this value is omitted, pagination has finished. Be sure to terminate pagination
-else it will restart resulting in an infinite loop.`)
-      }
-    }
-  }
-
-  static get _QUERY_STRING () {
-    if (!this.ENABLE_PAGINATION) {
-      return this.QS
-    }
-    const qs = this.QS ?? {}
-    if (qs.nextToken) {
-      throw new Error('nextToken is reserved for ENABLE_PAGINATION flag')
-    }
-    if (qs.amount) {
-      throw new Error('amount is reserved for ENABLE_PAGINATION flag')
-    }
-    return {
-      ...qs,
-      nextToken: S.str.optional()
-        .desc(`A token used for paginating to the next "amount" of data. This
-value is returned from the previous call to this paginated API. When this value
-is omitted, pagination will start from the beginning.`),
-      amount: S.int.min(1).max(1000).default(100)
-        .desc(`Amount of data to fetch per page. The number of data returned
-may be smaller than this amount in the last page, since there might not be
-enough data to fill the last page.`)
-    }
+    return ret
   }
 
   /**
@@ -728,7 +657,7 @@ enough data to fill the last page.`)
       schema.params = this.__makeParamsWithDefaultValuesOptional(
         wrapInSchema(pathParams))
     }
-    const qs = this._QUERY_STRING
+    const qs = this.QS
     if (qs) {
       schema.querystring = this.__makeParamsWithDefaultValuesOptional(
         wrapInSchema(qs))
