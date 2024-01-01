@@ -20,7 +20,17 @@ class TransactionAborted extends Error {
  * @class
  */
 class DatabaseAPI extends API {
+  /**
+   * Whether this API can only read from Firestore. If false, the API's
+   * computeResponse() method will run in a Firestore transaction.
+   * @public
+   */
   static IS_READ_ONLY = true
+
+  /**
+   * Options to pass the Firestore db.Context which wraps computeResponse().
+   * @public
+   */
   static CONTEXT_OPTIONS = {}
 
   async _computeResponse () {
@@ -66,6 +76,7 @@ class DatabaseAPI extends API {
   /**
    * Called just before the transaction starts. Useful to do async computation
    * outside the transaction (reducing the window for contention).
+   * @protected
    */
   async preTxStart () {}
 
@@ -78,6 +89,7 @@ class DatabaseAPI extends API {
    *
    * @param {*} respData the response data
    * @returns {*} the (possibly updated) response data
+   * @protected
    */
   async preCommit (respData) { return respData }
 
@@ -88,6 +100,7 @@ class DatabaseAPI extends API {
    *
    * @param {*} respData the response data
    * @returns {*} the (possibly updated) response data
+   * @protected
    */
   async postCommit (respData) { return respData }
 }

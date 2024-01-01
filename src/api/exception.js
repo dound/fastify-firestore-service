@@ -68,6 +68,8 @@ class __RequestDone extends Error {
 
 /**
  * Concrete class to indicate request is completed ok.
+ * @public
+ * @memberof Exceptions
  */
 class RequestDone extends __RequestDone {
   static STATUS = 200
@@ -150,6 +152,8 @@ class RequestError extends __RequestDone {
 
 /**
  * Thrown when a redirect is required.
+ * @public
+ * @memberof Exceptions
  */
 class RedirectException extends RequestError {
   static STATUS = 302
@@ -165,14 +169,17 @@ class RedirectException extends RequestError {
 
 /**
  * Thrown when a error is induced by client.
+ * @public
+ * @memberof Exceptions
  */
 class BadRequestException extends RequestError {
   static STATUS = 400
 }
 
 /**
- * Wraps Request Validation failures into
- * a RequestError object for processing.
+ * Wraps Request Validation failures into a RequestError object for processing.
+ * @public
+ * @memberof Exceptions
  */
 class InvalidInputException extends BadRequestException {
   static STATUS = 400
@@ -201,6 +208,8 @@ class InvalidInputException extends BadRequestException {
 /**
  * Thrown when a client is not authorized to access the requested resource. For
  * example, user is trying to log in using invalid credentials.
+ * @public
+ * @memberof Exceptions
  */
 class UnauthorizedException extends RequestError {
   static STATUS = 401
@@ -214,6 +223,8 @@ class UnauthorizedException extends RequestError {
  * Thrown when an authenticated client does not have enough privilege to access
  * the requested resource. For example, a user tries to change other user's
  * data.
+ * @public
+ * @memberof Exceptions
  */
 class ForbiddenException extends RequestError {
   static STATUS = 403
@@ -225,6 +236,8 @@ class ForbiddenException extends RequestError {
 
 /**
  * Thrown when the requested resource is not found, or should be hidden.
+ * @public
+ * @memberof Exceptions
  */
 class NotFoundException extends RequestError {
   static STATUS = 404
@@ -236,6 +249,8 @@ class NotFoundException extends RequestError {
 
 /**
  * Thrown when an error is induced by a server bug.
+ * @public
+ * @memberof Exceptions
  */
 class InternalFailureException extends RequestError {
   static STATUS = 500
@@ -244,6 +259,8 @@ class InternalFailureException extends RequestError {
 /**
  * Thrown when server is temporarily unable to serve the request, due to
  * internal timeouts or service outage.
+ * @public
+ * @memberof Exceptions
  */
 class ServiceUnavailableException extends RequestError {
   static STATUS = 503

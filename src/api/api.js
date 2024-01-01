@@ -19,6 +19,7 @@ import RESPONSES from './response'
  * Given an object, return a new object with undefined keys removed.
  * @param {*} obj Input object, with potentially undefined keys
  * @returns new obj with no undefined keys
+ * @private
  */
 function pruneUndefined (obj) {
   return Object.entries(obj).reduce((all, [key, val]) => {
@@ -140,7 +141,10 @@ class API {
     return undefined
   }
 
-  /** Returns DESC as a string ready for output as Markdown. */
+  /**
+   * Returns DESC as a string ready for output as Markdown.
+   * @private
+   */
   static getDescMarkdownString () {
     return this.DESC.trim().replace(/\n/g, ' ')
   }
@@ -161,11 +165,13 @@ class API {
 
   /**
    * The Todea schema describing the path params this API handles, if any.
+   * @public
    */
   static PATH_PARAMS = undefined
 
   /**
    * The Todea schema describing the query string this API handles, if any.
+   * @public
    */
   static QS = undefined
 
@@ -173,6 +179,7 @@ class API {
    * The Todea schema describing the request body this API handles. Note that
    * GET requests should not have request bodies. Use HTTP POST requests if
    * request data size is too big to fit in the query string.
+   * @public
    */
   static BODY = undefined
 
@@ -188,18 +195,21 @@ class API {
    *   2) A subclass of {@see RequestDone}.
    *
    * The default is to not allow any output on HTTP 200 responses.
+   * @public
    */
   static RESPONSE = RESPONSES.NO_OUTPUT
 
   /**
    * Errors that may be returned from the API. Errors are subclasses
    * of RequestError.
+   * @public
    */
   static ERRORS = {}
 
   /**
    * Whether to log request body to Sentry when error.
    * For API with sensitive user data, this shouldn't set to true.
+   * @public
    */
   static LOG_REQUEST_BODY_ON_ERROR = false
 
@@ -221,12 +231,14 @@ class API {
    * The hostname from which this API can be called in a browser. By default
    * this API cannot be called from a browser due to CORS policy (combined with
    * the fact that no web application runs on our API subdomain).
+   * @public
    */
   static CORS_ORIGIN = undefined
 
   /**
    * Returns the CORS origin to use. On localhost, a non-wildcard CORS_ORIGIN
    * is returned as the localhost web app domain instead.
+   * @private
    */
   static getCORSOrigin () {
     const origin = this.CORS_ORIGIN
@@ -241,6 +253,7 @@ class API {
 
   /**
    * The header(s) which are allowed in CORS requests.
+   * @public
    */
   static CORS_HEADERS = ['Content-Type']
 
@@ -251,6 +264,7 @@ class API {
    *   CORS. On localhost, the origin is ignored and localhost is used instead.
    * @param {Array<string>} headers an optional list of headers to allow when
    *   this API is requested via CORS
+   * @private
    */
   __setCORSHeaders (origin, headers) {
     this.__reply.header('Access-Control-Allow-Origin', origin)
@@ -261,8 +275,8 @@ class API {
 
   /**
    * Calls computeResponse() inside _callAndHandleRequestDone().
-   * @protected
    * @returns {Object|String} the HTTP response body
+   * @private
    */
   async _computeResponse () {
     return this._callAndHandleRequestDone(this.computeResponse, this.req)
@@ -273,6 +287,7 @@ class API {
    * @param {Function} func the function to run
    * @param  {...any} args the arguments to call func with
    * @returns the response data
+   * @private
    */
   async _callAndHandleRequestDone (func, ...args) {
     return this.constructor._callAndHandleRequestDone(
@@ -284,6 +299,7 @@ class API {
    * @param {fastify-reply} reply the reply object
    * @param {Function} func the function to run
    * @returns the response data
+   * @private
    */
   static async _callAndHandleRequestDone (reply, func) {
     try {
@@ -310,6 +326,7 @@ class API {
    * @returns {Object|String} optional JSON-able object or string to send back
    *   as the HTTP response body
    * @abstract
+   * @protected
    */
   async computeResponse (req) {
     assert.fail('API not implemented')
@@ -332,6 +349,7 @@ class API {
    *
    * @param {callAPIOptions} options describe the HTTP request to make
    * @returns {Object|string} the HTTP response body, parsed if it was JSON
+   * @protected
    */
   async callAPI ({
     method = 'POST', headers = {}, url, body, qsParams
@@ -375,6 +393,10 @@ class API {
 
   /**
    * Gets headers from this request that should be forwarded.
+   *
+   * By default, this is all headers defined in HEADERS.
+   *
+   * @protected
    */
   getHeadersToForward () {
     // forward permission headers, if present
@@ -403,6 +425,7 @@ class API {
    * @param {Object} [qsParams] the query string parameters to launch with
    * @param {Object} [cookie] cookie data to send (good for sensitive values
    *   which should not be passed in the query string)
+   * @protected
    */
   redirectToWebApp ({
     schemeAndHost,
@@ -440,6 +463,7 @@ class API {
     this.__reply.redirect(schemeAndHost + path + qStr)
   }
 
+  /** @package */
   static async register (registrar) {
     await registrar.registerAPI(this)
   }
@@ -497,6 +521,7 @@ class API {
    * Removes the required marker from any top-level properties which have a
    * default value.
    * @param {TodeaSchema} schema a Todea schema
+   * @private
    */
   static __makeParamsWithDefaultValuesOptional (schema) {
     schema = schema.jsonSchema()
@@ -518,7 +543,7 @@ class API {
 
   /**
    * Returns the headers schema.
-   * @protected
+   * @private
   */
   static _getHeaders () {
     let headers = this.HEADERS
@@ -536,7 +561,7 @@ class API {
 
   /**
    * Returns the body schema.
-   * @protected
+   * @private
   */
   static _getBody () {
     return this.BODY
@@ -544,7 +569,7 @@ class API {
 
   /**
    * Return a response wrapped in a subclass of RequestDone.
-   * @protected
+   * @private
    */
   static _getResponse () {
     const response = this.RESPONSE
@@ -566,7 +591,7 @@ class API {
    * Return all errors an API may return. Common base classes may use this
    * method to add common errors, so users of the common base class can specify
    * ERRORS without special considerations.
-   * @protected
+   * @private
    */
   static _getErrors () {
     return {
@@ -579,6 +604,7 @@ class API {
 
   /**
    * Return a mapping from status code to Todea schemas.
+   * @private
    */
   static _getResponseSchemas () {
     const schemas = {}
@@ -597,6 +623,7 @@ class API {
   /**
    * Return a default empty response matching the type specified in success
    * response schema.
+   * @private
    */
   static _getEmptySuccessResponse () {
     const response = this._getResponse()
@@ -617,6 +644,7 @@ class API {
    * exceptions as 400 and 500 errors in production environment.
    * @param {Error} err A subclass of Error.
    * @param {Object} reply Reply object
+   * @private
    */
   static async _handleError (err, reply) {
     const errorName = err.constructor.name
@@ -644,10 +672,12 @@ class API {
     }
   }
 
+  /** @protected */
   static get swaggerSecurityConfig () {
     return []
   }
 
+  /** @private */
   static get swaggerSchema () {
     const wrapInSchema = (x) => {
       return x.isTodeaSchema ? x : S.obj(x)
