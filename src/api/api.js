@@ -339,9 +339,16 @@ export default class API {
       headers,
       method,
       url,
-      json: body,
       searchParams: qsParams,
       throwHttpErrors: false
+    }
+    // istanbul ignore if
+    if (body) {
+      if (typeof body === 'string') {
+        request.body = body
+      } else {
+        request.json = body
+      }
     }
     const resp = gotWrapper(request)
     const resolvedResp = await resp
