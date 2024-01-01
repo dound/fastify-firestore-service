@@ -1,4 +1,5 @@
 import fastify from 'fastify'
+import { v4 as uuidv4 } from 'uuid'
 
 import ComponentRegistrar from './component-registrar.js'
 import makeLogger from './make-logger.js'
@@ -138,10 +139,13 @@ export default async function makeService (params = {}) {
     logging,
     swagger
   } = params
+  const fastifyServerId = uuidv4()
+  let requestCount = 0
   const app = fastify({
     ignoreTrailingSlash: true,
     disableRequestLogging: true,
     logger: makeLogger(logging.unittesting),
+    genReqId: () => `${fastifyServerId}-${++requestCount}`,
     ajv: {
       customOptions: {
         removeAdditional: false,
