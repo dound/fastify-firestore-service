@@ -44,10 +44,10 @@ async function checkAPIRegisterWithErr (cls, errMsgOrError, moreOptions) {
 }
 
 async function checkRedirToWebApp (fastify, apiPath, app, headersToFwd = {}) {
-  async function check (qparamsFlag, defineCustomCookie, version = '', useCookie = true) {
+  async function check (qsParamsFlag, defineCustomCookie, version = '', useCookie = true) {
     const req = fastify.get(apiPath)
       .query({
-        qparamsFlag,
+        qsParamsFlag,
         defineCustomCookie,
         useCookie,
         ...(version ? { version } : {})
@@ -62,9 +62,9 @@ async function checkRedirToWebApp (fastify, apiPath, app, headersToFwd = {}) {
     const redirLoc = headers.location
     const [url, qs] = redirLoc.split('?')
     expect(url).toBe('http://localhost:3000/')
-    const qparams = querystring.parse(qs)
-    const expQParams = (qparamsFlag === 'include') ? { y: '3' } : {}
-    expect(qparams).toEqual(expQParams)
+    const qsParams = querystring.parse(qs)
+    const expqsParams = (qsParamsFlag === 'include') ? { y: '3' } : {}
+    expect(qsParams).toEqual(expqsParams)
     if (useCookie || defineCustomCookie) {
       const cookies = headers['set-cookie']
       expect(cookies.length).toBe(1)
@@ -130,7 +130,7 @@ class BasicTest extends BaseAppTest {
         abc: '123'
       },
       json: undefined,
-      searchParams: undefined,
+      qsParams: undefined,
       url: 'http://nothing',
       throwHttpErrors: false,
       decompress: true
@@ -212,7 +212,7 @@ class BasicTest extends BaseAppTest {
       method: 'POST',
       headers: {},
       json: undefined,
-      searchParams: undefined,
+      qsParams: undefined,
       url: 'http://nothing',
       throwHttpErrors: false,
       decompress: true
@@ -236,7 +236,7 @@ class BasicTest extends BaseAppTest {
       method: 'POST',
       headers: {},
       json: undefined,
-      searchParams: undefined,
+      qsParams: undefined,
       url: 'http://nothing',
       throwHttpErrors: false,
       decompress: true

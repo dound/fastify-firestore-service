@@ -329,7 +329,7 @@ export default class API {
   }
 
   async callAPI ({
-    method = 'POST', headers = {}, url, body, searchParams
+    method = 'POST', headers = {}, url, body, qsParams
   }) {
     headers = { ...headers } // copy so we can modify it
     this.addHeadersToForward(headers)
@@ -338,7 +338,7 @@ export default class API {
       method,
       url,
       json: body,
-      searchParams,
+      searchParams: qsParams,
       throwHttpErrors: false
     }
     const resp = gotWrapper(request)
@@ -391,11 +391,11 @@ export default class API {
   redirectToWebApp ({
     schemeAndHost,
     path = '/',
-    qparams = undefined,
+    qsParams = undefined,
     cookie
   }) {
-    const qStr = qparams
-      ? '?' + querystring.stringify(qparams)
+    const qStr = qsParams
+      ? '?' + querystring.stringify(qsParams)
       : ''
 
     const isLocalhost = process.env.NODE_ENV === 'localhost'

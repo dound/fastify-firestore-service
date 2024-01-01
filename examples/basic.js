@@ -233,7 +233,7 @@ class SomeFakeWebAppAPI extends TxAPI {
   static QS = {
     useCookie: S.bool.default(true),
     defineCustomCookie: S.bool,
-    qparamsFlag: S.str,
+    qsParamsFlag: S.str,
     version: S.str.optional()
   }
 
@@ -243,10 +243,10 @@ class SomeFakeWebAppAPI extends TxAPI {
     const params = {
       schemeAndHost: 'http://localhost:3000'
     }
-    if (req.query.qparamsFlag === 'include') {
-      params.qparams = { y: 3 }
-    } else if (req.query.qparamsFlag === 'empty') {
-      params.qparams = {}
+    if (req.query.qsParamsFlag === 'include') {
+      params.qsParams = { y: 3 }
+    } else if (req.query.qsParamsFlag === 'empty') {
+      params.qsParams = {}
     }
     if (req.query.useCookie || req.query.defineCustomCookie) {
       params.cookie = { name: 'todea', domain: 'example.com' }
