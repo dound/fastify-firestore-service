@@ -19,7 +19,7 @@ class TransactionAborted extends Error {
  * @public
  * @class
  */
-export default class TxAPI extends API {
+export default class DatabaseAPI extends API {
   static IS_READ_ONLY = true
   static CONTEXT_OPTIONS = {}
 

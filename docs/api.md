@@ -270,17 +270,17 @@ class NonStandardResponse extends RequestDone {
 ```
 
 ## Database Transactions
-`TxAPI` wraps your request in a transaction context
-from the [Data Modeling Library](https://github.com/dound/firestoredb):
+`DatabaseAPI` wraps your request in a database transaction context from the
+[FirestoreDB library](https://github.com/dound/firestoredb):
 ```javascript
-class SomeAPI extends TxAPI {
+class SomeAPI extends DatabaseAPI {
   static IS_READ_ONLY = false
   async computeResponse () {
-    const someItem = await this.tx.get(SomeModel, ...)
+    const someDoc = await this.tx.get(SomeModel, ...)
     // changes are automatically saved when the request completes (assuming the
     // transaction succeeds, i.e., it doesn't encounter excessive contention or
     // some other problem)
-    someItem.someField += 1
+    someDoc.someField += 1
   }
 }
 ```
@@ -290,7 +290,7 @@ less than 400 (e.g., HTTP 200 "OK" or HTTP 302 "Moved Temporarily"). Response
 codes 400 and higher are considered errors, and the transaction will be aborted
 (no changes will be saved).
 
-By default, `TxAPI` uses a _read-only_ transaction. Set `IS_READ_ONLY` to
+By default, `DatabaseAPI` uses a _read-only_ transaction. Set `IS_READ_ONLY` to
 `false` (like in the above example) to allow database writes.
 
 Other options for the database context can be set in the `CONTEXT_OPTIONS`
@@ -298,6 +298,11 @@ object:
 ```javascript
   static CONTEXT_OPTIONS = { retries: 3 }
 ```
+
+Note: If you leave the API read-only and add the `inconsistentReads: true` to
+`CONTEXT_OPTIONS` then the database context will not be a transaction. See
+FirestoreDB library's documentation for more detail.
+
 
 ### Pre and Post Commit Processing
 You can perform extra processing just before the per-request transaction
@@ -352,7 +357,7 @@ Transactions sometimes retry due to contention, etc. It's important to not
 store state on `this`, `req` or other heap variables while your transaction
 runs, and then reference that data in a retry on accident.
 ```javascript <!-- embed:../examples/tx.js:scope:RememberingTooMuchAPI -->
-class RememberingTooMuchAPI extends TxAPI {
+class RememberingTooMuchAPI extends DatabaseAPI {
   static NAME = 'unwise memory use'
   static DESC = 'shares state across tx attempts and requests'
   static PATH = '/overshare'
@@ -411,7 +416,7 @@ Your request _should_ do expensive computation unrelated to the database in its
 constructor (`tx` is not defined at that point, and no transaction is running
 and so transaction retries will not cause your constructor to re-run).
 ```javascript
-class SomeAPI extends TxAPI {
+class SomeAPI extends DatabaseAPI {
   constructor (fastify, req, reply) {
     super(fastify, req, reply)
     this.doSomeExpensiveComputation()

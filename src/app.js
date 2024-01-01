@@ -1,7 +1,7 @@
 import * as basicExamples from '../examples/basic'
 import * as corsExamples from '../examples/cors'
+import * as dbExamples from '../examples/db'
 import * as docsExamples from '../examples/docs'
-import * as txExamples from '../examples/tx'
 
 import { makeApp } from './index'
 
@@ -11,8 +11,8 @@ export default async () => makeApp({
   components: {
     ...basicExamples,
     ...corsExamples,
+    ...dbExamples,
     ...docsExamples,
-    ...txExamples,
     notAPI: {}
   },
   cookie: {

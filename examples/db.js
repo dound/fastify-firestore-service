@@ -4,7 +4,7 @@ import S from '@pocketgems/schema'
 import db from 'firestoredb'
 import { v4 as uuidv4 } from 'uuid'
 
-import { TxAPI } from '../src/index'
+import { DatabaseAPI } from '../src/index'
 
 import { SimpleAPI } from './simple'
 
@@ -48,10 +48,10 @@ class CountForTx extends db.Model {
   static FIELDS = { n: S.int.default(0) }
 }
 
-class DBWithTXAPI extends TxAPI {
+class DBWithDatabaseAPI extends DatabaseAPI {
   static NAME = 'example for db with tx api'
   static DESC = 'uses automatic request wrapping in a tx'
-  static PATH = '/dbWithTxAPI'
+  static PATH = '/dbWithDatabaseAPI'
   static IS_READ_ONLY = false
   static CONTEXT_OPTIONS = { retries: 3 }
   static BODY = {
@@ -92,10 +92,10 @@ class DBWithTXAPI extends TxAPI {
       }
     }
     const data = CountForTx.data({ id: req.body.id })
-    const item = await this.tx.get(data, { createIfMissing: true })
-    item.n += this.base + req.body.delta
+    const doc = await this.tx.get(data, { createIfMissing: true })
+    doc.n += this.base + req.body.delta
     return {
-      n: item.n,
+      n: doc.n,
       computeCalls: this.computeCalls
     }
   }
@@ -129,7 +129,7 @@ class DBWithTXAPI extends TxAPI {
   }
 }
 
-class RememberingTooMuchAPI extends TxAPI {
+class RememberingTooMuchAPI extends DatabaseAPI {
   static NAME = 'unwise memory use'
   static DESC = 'shares state across tx attempts and requests'
   static PATH = '/overshare'
@@ -219,7 +219,7 @@ class JsonSchemaAPI extends SimpleAPI {
 }
 
 export {
-  DBWithTXAPI,
+  DBWithDatabaseAPI,
   JsonSchemaAPI,
   RememberingTooMuchAPI,
   Throw400API,

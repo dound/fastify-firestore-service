@@ -1,4 +1,4 @@
-import { API, TxAPI } from '../src/index'
+import { API, DatabaseAPI } from '../src/index'
 
 class CORSTestAPI extends API {
   static DESC = 'CORS test'
@@ -12,7 +12,7 @@ class CrossAnyOriginAPI extends CORSTestAPI {
 }
 
 // subclass from UnauthenticatedAPI to check its different default CORS headers
-class CrossOneOriginAPI extends TxAPI {
+class CrossOneOriginAPI extends DatabaseAPI {
   static NAME = 'one CORS origin'
   static DESC = 'with app header'
   static PATH = '/api/cors/one'
@@ -24,7 +24,7 @@ class CrossOneOriginAPI extends TxAPI {
   async computeResponse () { /* no-op */ }
 }
 
-class CrossNoAppOriginAPI extends TxAPI {
+class CrossNoAppOriginAPI extends DatabaseAPI {
   static NAME = 'one CORS origin'
   static DESC = 'without app header'
   static PATH = '/api/cors/noAppHeader'

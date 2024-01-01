@@ -2,7 +2,7 @@ import assert from 'node:assert'
 
 import S from '@pocketgems/schema'
 
-import { API, EXCEPTIONS, RESPONSES, TxAPI } from '../src/index'
+import { API, EXCEPTIONS, RESPONSES, DatabaseAPI } from '../src/index'
 
 const {
   BadRequestException,
@@ -51,7 +51,7 @@ class DupErrorCodeAPI extends API {
   }
 }
 
-class SetCodeAPI extends TxAPI {
+class SetCodeAPI extends DatabaseAPI {
   static PATH = '/setCode'
   static DESC = 'API that set status code manually.'
   static BODY = {
@@ -199,7 +199,7 @@ class ThrowFromConstructorToReplyAPI extends API {
   }
 }
 
-class PostComputeResponseWithThrowAPI extends TxAPI {
+class PostComputeResponseWithThrowAPI extends DatabaseAPI {
   static PATH = '/preCommit'
   static DESC = 'tests preCommit()'
   static QS = {

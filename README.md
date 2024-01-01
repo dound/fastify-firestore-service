@@ -6,7 +6,6 @@ enterprise scale applications supporting millions of users.
 ## Topics <!-- omit in toc -->
 - [Key Features](#key-features)
 - [Getting Started](#getting-started)
-  - [Creating A Database Table](#creating-a-database-table)
   - [Creating An API](#creating-an-api)
   - [Creating An App](#creating-an-app)
   - [Starting Server](#starting-server)
@@ -14,7 +13,6 @@ enterprise scale applications supporting millions of users.
   - [Customizing Component Registration](#customizing-component-registration)
 - [Unit testing](#unit-testing)
   - [Setup](#setup)
-  - [Writing Tests](#writing-tests)
 - [Generating SDKs](#generating-sdks)
   - [Swagger UI](#swagger-ui)
   - [OpenAPI SDKs](#openapi-sdks)
@@ -29,52 +27,20 @@ enterprise scale applications supporting millions of users.
   - Compression
   - Health check API
   - Advanced error handling
-  - Works with the FirestoreDB library
+  - Works with the [FirestoreDB library](https://github.com/dound/firestoredb)
 - SDK Generation
   - Swagger UI
   - OpenAPI SDK
 
 # Getting Started
-The Todea App library provides a way to define APIs, including managing
-Firestore interactions.
-
-## Creating A Database Table
-You can create a database table with a few lines of code:
-```js
-import db from 'firestoredb'
-import S from '@pocketgems/schema'
-
-class Order extends db.Model {
-  static KEY = {
-    id: S.str.min(10).desc(`A unique string id for the order.
-      ID must be at least 10 characters long`)
-  }
-
-  static FIELDS = {
-    customerId: S.str,
-    items: S.map.value(S.obj({
-      itemId: S.str.desc('An item\'s ID'),
-      quantity: S.int.min(1),
-      dollarPrice: S.double.min(1)
-    }))
-  }
-}
-```
-
-The example above defines a db table called `Order` to store customers orders.
-Each order can have one or more items in it, with each item have an ID, quantity
-and dollar price. The example uses 2 dependencies for defining schema and data
-model. You may read more about these libraries in greater detail in their
-perspective project later:
-- [Todea Schema library](https://github.com/pocketgems/schema)
-- [FirestoreDB library](https://github.com/dound/firestoredb)
+The Todea App library provides a way to define APIs, including managing data.
 
 ## Creating An API
 You can create an API to look up order details like this:
 ```js
-import { TxAPI, EXCEPTIONS } from 'dound/fastify-app'
+import { DatabaseAPI, EXCEPTIONS } from 'dound/fastify-app'
 
-class GetOrderAPI extends TxAPI {
+class GetOrderAPI extends DatabaseAPI {
   static PATH = '/getOrder'
   static DESC = `Get an order by ID, if order doesn't exists a 404 Not found
     error is returned`
@@ -115,8 +81,8 @@ export default async () => makeApp({
   components: {
     ...basicExamples,
     ...corsExamples,
+    ...dbExamples,
     ...docsExamples,
-    ...txExamples,
     notAPI: {}
   },
   cookie: {
@@ -205,20 +171,9 @@ workflow with custom components. For example, to add a new type of component
 
 # Unit testing
 ## Setup
-Apps store data in Firestore. You must setup the database
-before running tests. You can run `yarn start-local-db`
-to start a local emulator. And use `test/environment.js` to setup Jest envrionments.
-
-## Writing Tests
-This library exposes `@pocketgems/unit-test` through
-`@pocketgems/app/test/base-test` and adds 2 new symbols:
-- `BaseAppTest` is the common base class for testing APIs. Useage is similar to
-  BaseTest, but exposes a this.app handle to invoke APIs.
-
-  You have to implement a `static async requireApp()` method to import the app.
-
-- `mockGot` is a utility method to mock out-going requests from
-  `this.callAPI()`. See examples of using this in this library's unit tests.
+Apps store data in Firestore. You must setup the database before running tests.
+You can run `yarn start-local-db` to start a local emulator. And use
+`test/environment.js` to setup Jest environments.
 
 # Generating SDKs
 ## Swagger UI

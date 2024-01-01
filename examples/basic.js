@@ -1,6 +1,6 @@
 import S from '@pocketgems/schema'
 
-import { API, TxAPI, EXCEPTIONS, RESPONSES } from '../src/index'
+import { API, DatabaseAPI, EXCEPTIONS, RESPONSES } from '../src/index'
 
 import { SimpleAPI } from './simple'
 
@@ -175,7 +175,7 @@ class NoRequiredAPI extends API {
   }
 }
 
-class CallAPIAPI extends TxAPI {
+class CallAPIAPI extends DatabaseAPI {
   static NAME = 'Test callAPI with default params'
   static PATH = '/callAPIWithDefaults'
   static DESC = 'API for unit testing'
@@ -192,7 +192,7 @@ class CallAPIAPI extends TxAPI {
   }
 }
 
-class ReturnBasicValueAPI extends TxAPI {
+class ReturnBasicValueAPI extends DatabaseAPI {
   static NAME = 'Return a custom (non-object) value'
   static PATH = '/getString'
   static DESC = 'API for unit testing'
@@ -225,7 +225,7 @@ class ReturnUndefinedAPI extends SimpleAPI {
   }
 }
 
-class SomeFakeWebAppAPI extends TxAPI {
+class SomeFakeWebAppAPI extends DatabaseAPI {
   static NAME = 'api to serve a web app'
   static METHOD = 'GET'
   static DESC = 'pretends to serve a web app'

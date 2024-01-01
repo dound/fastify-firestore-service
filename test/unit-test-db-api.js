@@ -59,14 +59,14 @@ class DBLibTest extends BaseAppTest {
       .expect(200)
   }
 
-  async testTxAPICommit () {
+  async testDatabaseAPICommit () {
     const maxRetriesToSucceed = 3
     const nValues = {}
     const app = this.app
     // note: this example API is configured to retry up to 3 times
     async function check (id, delta, numTimesToRetry, failInPreCommit) {
       const shouldSucceed = numTimesToRetry <= maxRetriesToSucceed
-      const resp = await app.post('/unittest/dbWithTxAPI')
+      const resp = await app.post('/unittest/dbWithDatabaseAPI')
         .set('Content-Type', 'application/json')
         .send({ id, delta, numTimesToRetry, failInPreCommit })
         .expect(shouldSucceed ? 200 : 500)
@@ -91,7 +91,7 @@ class DBLibTest extends BaseAppTest {
     await check(id1, 3, 2, false) // try failing in computeResponse()
     await check(id1, 4, 3, true) // try failing in postOkResponse()
     await check(id1, 7, 0, true) // can add more
-    await check(uuidv4(), -1, 0, true) // can work on other rows too
+    await check(uuidv4(), -1, 0, true) // can work on other db documents too
     await check(id1, 2, 4, false) // can fail all retries => no postCommit()
     await check(id1, 1, 0, false) // check value is okay after failure
   }
