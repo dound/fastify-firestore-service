@@ -26,6 +26,7 @@ function gotWrapper (options, mockedGot) {
       headers['content-encoding'] = 'br'
     }
   }
+  // istanbul ignore next
   const got = mockedGot ?? gotWrapper.__mocked_got ?? realGot
   return got(options)
 }
