@@ -329,7 +329,7 @@ export default class API {
   }
 
   async callAPI ({
-    method = 'POST', headers = {}, url, body, searchParams, compress
+    method = 'POST', headers = {}, url, body, searchParams
   }) {
     headers = { ...headers } // copy so we can modify it
     this.addHeadersToForward(headers)
@@ -339,8 +339,7 @@ export default class API {
       url,
       json: body,
       searchParams,
-      throwHttpErrors: false,
-      compress
+      throwHttpErrors: false
     }
     const resp = gotWrapper(request)
     const resolvedResp = await resp
