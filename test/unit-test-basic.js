@@ -1,6 +1,8 @@
 import { AssertionError } from 'node:assert'
 import querystring from 'node:querystring'
 
+import { jest } from '@jest/globals'
+
 import { RequestValidationAPI } from '../examples/basic'
 import { API, EXCEPTIONS } from '../src/index'
 
