@@ -1,5 +1,5 @@
 # Simple workflow for deploying static content to GitHub Pages
-name: Deploy generated docs to Pages
+name: Deploy generated docs to GitHub Pages
 
 on:
   # Runs on pushes targeting the default branch
@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Build Docs
         run: |
           yarn setup

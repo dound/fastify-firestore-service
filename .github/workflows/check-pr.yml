@@ -9,8 +9,8 @@ jobs:
       contents: read
       packages: read
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           registry-url: 'https://npm.pkg.github.com'
@@ -19,5 +19,14 @@ jobs:
         shell: bash
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: yarn test
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+        with:
+          version: '>= 458.0.0'
+          install_components: 'cloud-firestore-emulator'
+      - name: 'Run unit tests'
+        run: |
+          sudo apt-get install -y google-cloud-cli-firestore-emulator
+          yarn start-local-db > /dev/null 2> /dev/null &
+          yarn test
         shell: bash
