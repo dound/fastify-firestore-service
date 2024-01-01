@@ -24,7 +24,6 @@ This library is used to define APIs.
   - [Cross Origin (CORS)](#cross-origin-cors)
 - [Niche Concepts](#niche-concepts)
   - [Other API Input Data Options](#other-api-input-data-options)
-  - [Non-app specific APIs](#non-app-specific-apis)
   - [Custom Middleware](#custom-middleware)
   - [Gotcha: Sharing Schemas](#gotcha-sharing-schemas)
   - [Localhost Cross-Origin Resource Sharing (CORS)](#localhost-cross-origin-resource-sharing-cors)
@@ -250,12 +249,12 @@ class SessionExpiredException extends RequestError {
 ```
 
 ### Dynamic Errors
-APIs may need to re-throw an exception returned from another service's API.
+APIs may need to re-throw an exception returned from an external API.
 Dynamic error exceptions can be instantiated with
 `new RequestError(message, data, code)`.
 
 ### Return Success Response
-Similar to short circuiting to return errors, exceptions can be thrown to
+Similar to short circuiting return errors, exceptions can be thrown to
 return success responses. It is useful to avoid a long stack of return
 statements. Success responses should throw `new RequestOkay(data)`. Data must
 match the `RESPONSE` schema.
@@ -443,11 +442,9 @@ use `async/await` in it, unlike the constructor:
 ```
 
 ## API Path
-A public API's request path is of the form `/<Service Name><API PATH>`. For
-example, the leaderboard service has a public API to get leaderboard entries at
-the path `/leaderboard/entriesById`. A private API's request path is similar
--- it's just prefixed by the `/internal`, for example
-`/internal/leaderboard/score/set`.
+An API's request path is of the form `/<Service Name><API PATH>`. For
+example, a leaderboard service might have an API to get leaderboard entries
+at the path `/leaderboard/entriesById`.
 
 
 ## Long API Descriptions
@@ -480,35 +477,30 @@ the API will be omitted from the Swagger documentation.
 
 
 ## One-Time Setup
-Some APIs may need to do some one-time initialization work. For example, our
-leaderboard service defines a custom Redis command. This sort of thing can be
-done by defining a static `setup()` method on your API:
+Some APIs may need to do some one-time initialization work. This sort of thing
+can be done by defining a static `setup()` method on your API:
 ```javascript
 static async setup (fastify) {
-    fastify.redis.defineCommand('updateScoreIfHigher', {
-      // ...
-    })
+    fastify.redis.defineCommand(/* add some custom local redis command... */)
 }
 ```
 
 
 ## Asynchronous Processing
-Each service is served by multiple virtual machines (VM). Each VM will
-typically accept _multiple_ requests for processing at once. However, each VM
-is only allocated a single processor core, and request processing is
-single-threaded (in a single process). This means each machine is only able to
-physically execute one request at a time. We use JavaScript's `async`/`await`
-syntax to achieve lightweight concurrency; understanding this concurrency model
-is important, but beyond the scope of this documentation so check
+A service can accept _multiple_ requests for processing at once. However,
+request processing is single-threaded (in a single process). JavaScript's
+`async`/`await` syntax allows us to achieve lightweight concurrency;
+understanding this concurrency model is important, but beyond the scope of this
+documentation so check
 [this async/await primer](https://medium.com/@garyo_83013/javascript-promises-and-async-await-for-c-programmers-aa349026f2e7)
 to learn more.
 
 This is a common setup because APIs tend to spend a lot of their time blocked
 waiting on I/O, typically in the form of HTTP requests to other services (e.g.,
-the database, cache or other Todea services). It is critical to never perform
-synchronous I/O as this would stall the CPU (and every request on the VM) until
+the database, cache or other API services). It is critical to never perform
+synchronous I/O as this would stall the CPU (and every other request) until
 the I/O completes. Use `async`/`await` to asynchronously block on I/O and
-enable the VM to continue productively using the CPU to process other requests.
+enable the server to continue productively using the CPU to process other requests.
 Services with long-running CPU-bound requests may need to tweak (lower) request
 processing concurrency to reduce queuing delays as the CPU works on one request
 for an extended time, ignoring and starving other requests and possibly leading
@@ -547,7 +539,7 @@ static CORS_ORIGIN = '*'
 This section explains niche functionality.
 
 ## Other API Input Data Options
-Todea APIs are typically requested via the HTTP POST method. API-specific
+APIs are typically requested via the HTTP POST method. API-specific
 inputs are typically sent in the request body in JSON format (though some
 universal inputs are sent in HTTP headers, such as which app and user sent the
 request). API outputs are typically transmitted as JSON data in the HTTP
@@ -555,7 +547,7 @@ response body.
 
 Occasionally, it may be necessary for an API to use a different HTTP method, or
 different input or output types or formats. One possibility is when integrating
-with a third-party who requires this. However, our own APIs should be
+with a third-party who requires this. However, APIs should generally be
 consistent and stick to HTTP POST data with HTTP request and response bodies
 being JSON formatted.
 
@@ -647,26 +639,17 @@ class NonStandardAddNumbersAPI extends API {
 ```
 
 
-## Non-app specific APIs
-By default, APIs expect to be told which app they pertain to (using the custom
-x-app HTTP header). If an API does not operate in the context of a specific
-app, then this requirement can be removed:
-```javascript
-// this returns true by default but it can be overridden
-static IS_APP_HEADER_REQUIRED = false
-```
-
 ## Custom Middleware
 If desired, each API can be run with custom middleware and other fastify
 options. To do this, you'll need to override the `register()` method and
 call `app.register()` as desired.
 
 ## Gotcha: Sharing Schemas
-In the Leaderboard service, multiple APIs share these parameters:
+In order for multiple APIs to share these parameters via inheritance:
 ```javascript
   static get BODY () {
     return S.obj({
-      leaderboard: S.SCHEMAS.STR_ANDU,
+      leaderboard: S.str,
       hasTiebreakers: S.bool.default(true).desc(
         'must be set to true if the leaderboard uses tiebreakers')
     })
@@ -674,7 +657,7 @@ In the Leaderboard service, multiple APIs share these parameters:
 ```
 
 Notice that `BODY` is defined as a getter function, not a static member
-variable. The reason is that multiple subclasses call `super.BODY` to extend
+variable. The reason is that subclasses will call `super.BODY` to extend
 the object. They each need their own copy of the schema (which the getter
 creates and returns). If they both built from the same copy, it would cause
 internal problems with the schema object.
