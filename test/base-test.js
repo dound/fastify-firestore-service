@@ -5,7 +5,7 @@ import { BaseTest, runTests } from '@pocketgems/unit-test'
 import superagentDefaults from 'superagent-defaults'
 import supertest from 'supertest'
 
-import makeService from '../src/app'
+import makeService from '../src/app.js'
 
 let FASTIFY_CACHE
 

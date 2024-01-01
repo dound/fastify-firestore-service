@@ -4,9 +4,9 @@ import S from '@pocketgems/schema'
 import db from 'firestore-orm'
 import { v4 as uuidv4 } from 'uuid'
 
-import { DatabaseAPI } from '../src/index'
+import { DatabaseAPI } from '../src/index.js'
 
-import { SimpleAPI } from './simple'
+import { SimpleAPI } from './simple.js'
 
 class JsonSchemaData extends db.Model {
   static KEY = { id: S.str.min(1) }

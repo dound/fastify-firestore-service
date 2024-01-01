@@ -2,7 +2,7 @@ import S from '@pocketgems/schema'
 import fp from 'fastify-plugin'
 import { v4 as uuidv4 } from 'uuid'
 
-import { InvalidInputException } from '../api/exception'
+import { InvalidInputException } from '../api/exception.js'
 
 export default fp(function (fastify, options, next) {
   const returnErrorDetail = options.errorHandler.returnErrorDetail

@@ -1,8 +1,8 @@
 import S from '@pocketgems/schema'
 
-import { API, DatabaseAPI, EXCEPTIONS, RESPONSES } from '../src/index'
+import { API, DatabaseAPI, EXCEPTIONS, RESPONSES } from '../src/index.js'
 
-import { SimpleAPI } from './simple'
+import { SimpleAPI } from './simple.js'
 
 const {
   RequestDone,

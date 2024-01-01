@@ -1,4 +1,4 @@
-import { API, RESPONSES } from '../src/index'
+import { API, RESPONSES } from '../src/index.js'
 
 export class SimpleAPI extends API {
   static DESC = 'API for unit testing'

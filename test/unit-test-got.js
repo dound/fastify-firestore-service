@@ -2,9 +2,9 @@ import zlib from 'node:zlib'
 
 import { jest } from '@jest/globals'
 
-import gotWrapper from '../src/got-wrapper'
+import gotWrapper from '../src/got-wrapper.js'
 
-import { BaseTest, runTests } from './base-test'
+import { BaseTest, runTests } from './base-test.js'
 
 // Tests to make sure new JS features introduced in node14
 // are working, and context highlight, linter etc are compatible

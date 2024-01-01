@@ -1,6 +1,6 @@
-import { makeService } from '../src/index'
+import { makeService } from '../src/index.js'
 
-import { BaseTest, runTests } from './base-test'
+import { BaseTest, runTests } from './base-test.js'
 
 class makeServiceTest extends BaseTest {
   async testValidation () {

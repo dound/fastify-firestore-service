@@ -1,6 +1,6 @@
 import db from 'firestore-orm'
 
-import API from './api'
+import API from './api.js'
 
 /**
  * Thrown to avoid committing a transaction when an error occurs.

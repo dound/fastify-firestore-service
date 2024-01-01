@@ -1,14 +1,14 @@
 import fastify from 'fastify'
 
-import ComponentRegistrar from './component-registrar'
-import makeLogger from './make-logger'
-import compressPlugin from './plugins/compress'
-import contentParserPlugin from './plugins/content-parser'
-import cookiePlugin from './plugins/cookie'
-import errorHandlerPlugin from './plugins/error-handler'
-import healthCheckPlugin from './plugins/health-check'
-import latencyTrackerPlugin from './plugins/latency-tracker'
-import swaggerPlugin from './plugins/swagger'
+import ComponentRegistrar from './component-registrar.js'
+import makeLogger from './make-logger.js'
+import compressPlugin from './plugins/compress.js'
+import contentParserPlugin from './plugins/content-parser.js'
+import cookiePlugin from './plugins/cookie.js'
+import errorHandlerPlugin from './plugins/error-handler.js'
+import healthCheckPlugin from './plugins/health-check.js'
+import latencyTrackerPlugin from './plugins/latency-tracker.js'
+import swaggerPlugin from './plugins/swagger.js'
 
 /**
  * @typedef {object} CookieConfig

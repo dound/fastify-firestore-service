@@ -3,7 +3,7 @@ import querystring from 'node:querystring'
 
 import S from '@pocketgems/schema'
 
-import gotWrapper from '../got-wrapper'
+import gotWrapper from '../got-wrapper.js'
 
 import {
   BadRequestException,
@@ -12,8 +12,8 @@ import {
   RedirectException,
   RequestDone,
   RequestError
-} from './exception'
-import RESPONSES from './response'
+} from './exception.js'
+import RESPONSES from './response.js'
 
 /**
  * Given an object, return a new object with undefined keys removed.

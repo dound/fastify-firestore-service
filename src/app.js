@@ -1,9 +1,9 @@
-import * as basicExamples from '../examples/basic'
-import * as corsExamples from '../examples/cors'
-import * as dbExamples from '../examples/db'
-import * as docsExamples from '../examples/docs'
+import * as basicExamples from '../examples/basic.js'
+import * as corsExamples from '../examples/cors.js'
+import * as dbExamples from '../examples/db.js'
+import * as docsExamples from '../examples/docs.js'
 
-import { makeService } from './index'
+import { makeService } from './index.js'
 
 const components = {
   ...basicExamples,

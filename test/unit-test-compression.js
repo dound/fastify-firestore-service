@@ -1,6 +1,6 @@
 import zlib from 'node:zlib'
 
-import { BaseAppTest, runTests } from './base-test'
+import { BaseAppTest, runTests } from './base-test.js'
 
 function getURI (path) {
   return `/unittest${path}`

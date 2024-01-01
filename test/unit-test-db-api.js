@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 
-import { BaseAppTest, runTests } from './base-test'
+import { BaseAppTest, runTests } from './base-test.js'
 
 function getURI (postfix) {
   return '/unittest' + postfix

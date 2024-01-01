@@ -1,4 +1,4 @@
-import { API, DatabaseAPI } from '../src/index'
+import { API, DatabaseAPI } from '../src/index.js'
 
 class CORSTestAPI extends API {
   static DESC = 'CORS test'

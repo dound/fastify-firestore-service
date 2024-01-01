@@ -3,11 +3,11 @@ import querystring from 'node:querystring'
 
 import { jest } from '@jest/globals'
 
-import { RequestValidationAPI } from '../examples/basic'
-import gotWrapper from '../src/got-wrapper'
-import { API, EXCEPTIONS } from '../src/index'
+import { RequestValidationAPI } from '../examples/basic.js'
+import gotWrapper from '../src/got-wrapper.js'
+import { API, EXCEPTIONS } from '../src/index.js'
 
-import { BaseAppTest, mockGot, runTests } from './base-test'
+import { BaseAppTest, mockGot, runTests } from './base-test.js'
 
 function getURI (path) {
   return `/unittest${path}`

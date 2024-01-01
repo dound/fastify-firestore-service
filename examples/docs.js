@@ -2,7 +2,7 @@ import assert from 'node:assert'
 
 import S from '@pocketgems/schema'
 
-import { API, EXCEPTIONS, RESPONSES, DatabaseAPI } from '../src/index'
+import { API, EXCEPTIONS, RESPONSES, DatabaseAPI } from '../src/index.js'
 
 const {
   BadRequestException,

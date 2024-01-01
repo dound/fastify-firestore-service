@@ -2,7 +2,7 @@ import assert from 'node:assert'
 
 import S from '@pocketgems/schema'
 
-import RESPONSES from './response'
+import RESPONSES from './response.js'
 
 /**
  * @namespace Exceptions
