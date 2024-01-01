@@ -296,6 +296,12 @@ codes 400 and higher are considered errors, and the transaction will be aborted
 By default, `TxAPI` uses a _read-only_ transaction. Set `IS_READ_ONLY` to
 `false` (like in the above example) to allow database writes.
 
+Other options for the database context can be set in the `CONTEXT_OPTIONS`
+object:
+```javascript
+  static CONTEXT_OPTIONS = { retries: 3 }
+```
+
 ### Pre and Post Commit Processing
 You can perform extra processing just before the per-request transaction
 _attempts_ to commit by overriding the `preCommit(respData)` function (not
@@ -354,6 +360,7 @@ class RememberingTooMuchAPI extends TxAPI {
   static DESC = 'shares state across tx attempts and requests'
   static PATH = '/overshare'
   static IS_READ_ONLY = false
+  static CONTEXT_OPTIONS = { retries: 3 }
   static SDK_GROUP = null
   static BODY = {
     numTries: S.int.min(0)

@@ -53,6 +53,7 @@ class DBWithTXAPI extends TxAPI {
   static DESC = 'uses automatic request wrapping in a tx'
   static PATH = '/dbWithTxAPI'
   static IS_READ_ONLY = false
+  static CONTEXT_OPTIONS = { retries: 3 }
   static SDK_GROUP = null
   static BODY = {
     id: S.str,
@@ -134,6 +135,7 @@ class RememberingTooMuchAPI extends TxAPI {
   static DESC = 'shares state across tx attempts and requests'
   static PATH = '/overshare'
   static IS_READ_ONLY = false
+  static CONTEXT_OPTIONS = { retries: 3 }
   static SDK_GROUP = null
   static BODY = {
     numTries: S.int.min(0)

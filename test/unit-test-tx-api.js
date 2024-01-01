@@ -63,6 +63,7 @@ class DBLibTest extends BaseAppTest {
     const maxRetriesToSucceed = 3
     const nValues = {}
     const app = this.app
+    // note: this example API is configured to retry up to 3 times
     async function check (id, delta, numTimesToRetry, failInPreCommit) {
       const shouldSucceed = numTimesToRetry <= maxRetriesToSucceed
       const resp = await app.post('/unittest/dbWithTxAPI')

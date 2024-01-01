@@ -21,13 +21,17 @@ class TransactionAborted extends Error {
  */
 export default class TxAPI extends API {
   static IS_READ_ONLY = true
+  static CONTEXT_OPTIONS = {}
 
   async _computeResponse () {
     await this.preTxStart()
 
     let ret
     try {
-      const opts = { readOnly: this.constructor.IS_READ_ONLY }
+      const opts = {
+        ...this.constructor.CONTEXT_OPTIONS,
+        readOnly: this.constructor.IS_READ_ONLY
+      }
       ret = await db.Context.run(opts, async tx => {
         this.tx = tx
         this.req.tx = tx
