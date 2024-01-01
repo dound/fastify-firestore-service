@@ -133,7 +133,8 @@ class BasicTest extends BaseAppTest {
       searchParams: undefined,
       url: 'http://nothing',
       throwHttpErrors: false,
-      compress: true
+      compress: true,
+      decompress: true
     })
     mockedGot.mockReset()
   }
@@ -215,7 +216,8 @@ class BasicTest extends BaseAppTest {
       searchParams: undefined,
       url: 'http://nothing',
       throwHttpErrors: false,
-      compress: true
+      compress: true,
+      decompress: true
     })
     mockedGot.mockReset()
   }
@@ -239,7 +241,8 @@ class BasicTest extends BaseAppTest {
       searchParams: undefined,
       url: 'http://nothing',
       throwHttpErrors: false,
-      compress: true
+      compress: true,
+      decompress: true
     })
     mockedGot.mockReset()
   }
