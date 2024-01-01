@@ -73,7 +73,15 @@ function getLocalhostOverrides () {
       return '' // skip pino logging
     }
   }
-  return { prettifier }
+  return {
+    prettifier,
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        colorize: true
+      }
+    }
+  }
 }
 
 export default function makeCustomLogger (isLocalhost) {

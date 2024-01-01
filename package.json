@@ -3,13 +3,11 @@
   "version": "0.0.15",
   "description": "Todea App Library",
   "license": "Apache-2.0",
-
   "type": "module",
   "engines": {
     "node": ">=20"
   },
   "exports": "./src/index.js",
-
   "scripts": {
     "build-doc": "./docs/build.sh",
     "debug": "yarn start-local-db; ./node_modules/nodemon/bin/nodemon.js --no-lazy --legacy-watch --watch ./src --watch ./examples --watch ./test --inspect=9229 ./node_modules/jest/bin/jest.js --coverage --config=./jest.config.json --runInBand",
@@ -51,7 +49,6 @@
     "@babel/eslint-parser": "^7.17.0",
     "@babel/plugin-transform-class-properties": "^7.12.1",
     "@babel/preset-env": "^7.17.12",
-    "firestoredb": "dound/firestoredb#bcac77191aa73cc2283739ffec0fdd4df4efb826",
     "@pocketgems/schema": "^0.1.2",
     "@pocketgems/unit-test": "^0.2.0",
     "babel-loader": "^9.1.3",
@@ -61,10 +58,12 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^5.0.0",
+    "firestoredb": "dound/firestoredb#bcac77191aa73cc2283739ffec0fdd4df4efb826",
     "jest": "^29.7.0",
     "jsdoc": "4.0.2",
     "license-webpack-plugin": "^4.0.2",
     "nodemon": "^3.0.2",
+    "pino-pretty": "^10.3.1",
     "standard": "^17.1.0",
     "superagent-defaults": "^0.1.14",
     "supertest": "^6.3.3",
