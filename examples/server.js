@@ -5,7 +5,16 @@ import '../test/environment.js'
 
 import makeTestApp from '../src/app.js'
 
+// this is not a production configuration!
+const params = {
+  logging: {
+    reportErrorDetail: true,
+    useUnitTestLogFormat: false,
+    reportAllErrors: true
+  }
+}
+
 // example start
-const app = await makeTestApp()
+const app = await makeTestApp(params)
 app.listen({ port: 8090, host: '0.0.0.0' })
 // example end

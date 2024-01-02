@@ -70,7 +70,7 @@ const components = {
 }
 ```
 ```javascript <!-- embed:src/app.js:section:example start:example end -->
-export default async () => makeService({
+export default async (params) => makeService({
   service: 'unittest',
   components,
   cookie: {
@@ -86,7 +86,8 @@ export default async () => makeService({
     authHeaders: ['x-app', 'x-uid'],
     servers: ['http://localhost:8080'],
     routePrefix: '/app/docs'
-  }
+  },
+  ...(params ?? {})
 })
 ```
 
@@ -99,7 +100,7 @@ to
 For example, `makeService()` is called in a `app.js` file, and the returned promise
 is exported, then you write the following code to start a server:
 ```javascript <!-- embed:examples/server.js:section:example start:example end -->
-const app = await makeTestApp()
+const app = await makeTestApp(params)
 app.listen({ port: 8090, host: '0.0.0.0' })
 ```
 

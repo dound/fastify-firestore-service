@@ -14,7 +14,7 @@ const components = {
 }
 
 // example start
-export default async () => makeService({
+export default async (params) => makeService({
   service: 'unittest',
   components,
   cookie: {
@@ -30,6 +30,7 @@ export default async () => makeService({
     authHeaders: ['x-app', 'x-uid'],
     servers: ['http://localhost:8080'],
     routePrefix: '/app/docs'
-  }
+  },
+  ...(params ?? {})
 })
 // example end
