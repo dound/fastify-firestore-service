@@ -1448,7 +1448,7 @@
 
 "@pocketgems/schema@^0.1.2":
   version "0.1.3"
-  resolved "https://npm.pkg.github.com/download/@pocketgems/schema/0.1.3/9986f8e5d882886d6a6b94cbe2b5c1bc8906bf71#9986f8e5d882886d6a6b94cbe2b5c1bc8906bf71"
+  resolved "https://registry.yarnpkg.com/@pocketgems/schema/-/schema-0.1.3.tgz#9986f8e5d882886d6a6b94cbe2b5c1bc8906bf71"
   integrity sha512-jdwGA+pZ0kQTIY1Zk1X5+9vmGI0cN0c7ZSSlUkZbQERCtgcYdzoaxmE+s3WbFWyAH0lziGaFzDy6JxvHf+ks9w==
   dependencies:
     ajv "^8.11.2"
@@ -1456,7 +1456,7 @@
 
 "@pocketgems/unit-test@^0.2.0":
   version "0.2.0"
-  resolved "https://npm.pkg.github.com/download/@pocketgems/unit-test/0.2.0/613fdf6d0f62c867af00b8e7b8ff6a9fe7760fca#613fdf6d0f62c867af00b8e7b8ff6a9fe7760fca"
+  resolved "https://registry.yarnpkg.com/@pocketgems/unit-test/-/unit-test-0.2.0.tgz#613fdf6d0f62c867af00b8e7b8ff6a9fe7760fca"
   integrity sha512-czYaKL8XNA0jVa416lprVSo1NZlQPWS8FYlAbFKFUCzv819zPLlSUQKG7LQaK2CiNAvCOhEmOuLbCNcdJvySNw==
   dependencies:
     chalk "^4.0.0"
@@ -3494,9 +3494,9 @@ find-up@^6.3.0:
     locate-path "^7.1.0"
     path-exists "^5.0.0"
 
-firestore-orm@dound/firestore-orm#bc28276f98b184335b6623ccb104e1e3b5c5ecc0:
+firestore-orm@dound/firestore-orm#c5e535818da536753c4b216d087a6be9b2b9ac76:
   version "0.0.1"
-  resolved "git+ssh://git@github.com/dound/firestore-orm.git#bc28276f98b184335b6623ccb104e1e3b5c5ecc0"
+  resolved "https://codeload.github.com/dound/firestore-orm/tar.gz/c5e535818da536753c4b216d087a6be9b2b9ac76"
   dependencies:
     "@google-cloud/firestore" "^7.1.0"
     deep-object-diff "^1.1.7"

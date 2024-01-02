@@ -59,7 +59,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^5.0.0",
-    "firestore-orm": "dound/firestore-orm#bc28276f98b184335b6623ccb104e1e3b5c5ecc0",
+    "firestore-orm": "dound/firestore-orm#c5e535818da536753c4b216d087a6be9b2b9ac76",
     "jest": "^29.7.0",
     "jsdoc": "3.6.11",
     "license-webpack-plugin": "^4.0.2",
