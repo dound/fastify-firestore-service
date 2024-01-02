@@ -1,9 +1,20 @@
 import S from '@pocketgems/schema'
+import * as Sentry from '@sentry/node'
 import fp from 'fastify-plugin'
 
 import { InvalidInputException } from '../api/exception.js'
 
 export default fp(function (fastify, options, next) {
+  const isLocalhost = process.env.NODE_ENV === 'localhost'
+  // istanbul ignore next
+  const isSentryEnabled = options.errorHandler.sentryDSN && !isLocalhost
+  Sentry.init({
+    dsn: options.errorHandler.sentryDSN,
+    enabled: isSentryEnabled,
+    environment: process.env.NODE_ENV,
+    serverName: options.errorHandler.serverName
+  })
+
   const returnErrorDetail = options.errorHandler.returnErrorDetail
   // log any exception which occurs
   fastify.setErrorHandler(async (error, req, reply) => {
@@ -80,6 +91,31 @@ export default fp(function (fastify, options, next) {
     } else {
       reply.log.info(errInfo)
     }
+
+    Sentry.withScope(function (scope) {
+      if (customFingerprint) {
+        scope.setFingerprint(customFingerprint)
+      }
+      const user = {}
+      // istanbul ignore if
+      if (req.headers['x-uid']) {
+        user.id = req.headers['x-uid']
+      } else {
+        user.ip = req.ip
+      }
+      scope.setLevel(isCrash ? 'error' : 'warning')
+      scope.setUser(user)
+      scope.setTags({
+        method: req.method,
+        url: req.url,
+        status: errInfo.status
+      })
+      scope.setExtras({
+        msg: errInfo.message,
+        reqId: req.id
+      })
+      Sentry.captureException(error)
+    })
 
     const errorData = error.respData ?? {
       code: error.constructor.name,

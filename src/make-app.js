@@ -35,7 +35,8 @@ const COOKIE_CONFIG = {
 const LOGGING_CONFIG = {
   unittesting: false,
   reportAllErrors: false,
-  reportErrorDetail: false
+  reportErrorDetail: false,
+  sentryDSN: null
 }
 
 /**
@@ -164,7 +165,11 @@ export default async function makeService (params = {}) {
     .register(contentParserPlugin)
     .register(latencyTrackerPlugin, { latencyTracker })
     .register(errorHandlerPlugin, {
-      errorHandler: { returnErrorDetail: logging.reportErrorDetail }
+      errorHandler: {
+        returnErrorDetail: logging.reportErrorDetail,
+        sentryDSN: logging.sentryDSN,
+        serverName: fastifyServerId
+      }
     })
     .register(healthCheckPlugin, { healthCheck })
     .register(swaggerPlugin, { swagger: { service, ...swagger } })
