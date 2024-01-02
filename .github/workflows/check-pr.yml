@@ -26,7 +26,6 @@ jobs:
           install_components: 'cloud-firestore-emulator'
       - name: 'Run unit tests'
         run: |
-          sudo apt-get install -y google-cloud-cli-firestore-emulator
           yarn start-local-db > /dev/null 2> /dev/null &
           yarn test
         shell: bash
