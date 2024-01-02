@@ -2,6 +2,8 @@
 This is a backend web framework built on Fastify and our Firestore ORM. It
 provides a way to define APIs, including managing data.
 
+[![JSDoc](https://img.shields.io/badge/Documentation-JSDoc-green.svg?logo=githubpages)](https://dound.github.io/fastify-firestore-service)
+
 ## Topics <!-- omit in toc -->
 - [Key Features](#key-features)
 - [Getting Started](#getting-started)
