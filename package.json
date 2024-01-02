@@ -1,6 +1,6 @@
 {
-  "name": "fastify-firestore-service",
-  "version": "0.0.15",
+  "name": "@dound/fastify-firestore-service",
+  "version": "0.0.1",
   "description": "Web Framework using Fastify and Firestore ORM",
   "license": "Apache-2.0",
   "type": "module",
@@ -24,6 +24,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/dound/fastify-firestore-service.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@dound"
   },
   "files": [
     "src/**",
