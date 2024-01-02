@@ -1,6 +1,6 @@
 {
   "name": "@dound/fastify-firestore-service",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Web Framework using Fastify and Firestore ORM",
   "license": "Apache-2.0",
   "type": "module",
@@ -62,7 +62,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^5.0.0",
-    "firestore-orm": "dound/firestore-orm#c5e535818da536753c4b216d087a6be9b2b9ac76",
+    "firestore-orm": "dound/firestore-orm",
     "jest": "^29.7.0",
     "jsdoc": "3.6.11",
     "license-webpack-plugin": "^4.0.2",
