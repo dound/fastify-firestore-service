@@ -8,6 +8,7 @@ provides a way to define APIs, including managing data.
   - [Creating An API](#creating-an-api)
   - [Creating a Service](#creating-a-service)
   - [Running a Server](#running-a-server)
+  - [Setting up Error Reporting](#setting-up-error-reporting)
 - [Components](#components)
   - [Customizing Component Registration](#customizing-component-registration)
 - [Unit testing](#unit-testing)
@@ -103,6 +104,22 @@ is exported, then you write the following code to start a server:
 const app = await makeTestApp(params)
 app.listen({ port: 8090, host: '0.0.0.0' })
 ```
+
+## Setting up Error Reporting
+Any 500 HTTP response will be logged to Sentry if:
+* The `NODE_ENV` environment variable is not localhost
+* The service's logging configuration has the `sentryDSN` parameter set
+
+The Sentry repo will include:
+* Information about the user like ID or IP, as well as their user agent header
+* Information about the request including HTTP method, URL and response code
+* A unique ID for the request (the first part is a UUID identifying the
+  fastify instance which is running, and the second part is a number indicating
+  this requests unique number on this instance)
+* Stack trace of the error
+* Environment name (e.g., test or prod)
+* Release = git hash of the source code for the service that's running
+
 
 # Components
 A service is composed of components. A component can be an API, a DB Model,
