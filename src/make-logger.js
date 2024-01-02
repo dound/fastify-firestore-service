@@ -4,10 +4,10 @@ import querystring from 'node:querystring'
 import pino from 'pino'
 import wrap from 'word-wrap'
 
-// for localhost and unit testing, output to the console INSTEAD of to stdout
+// for unit testing, output to the console INSTEAD of to stdout
 // via pino (so that jest captures the output and groups it with the right test
 // suite)
-function getLocalhostOverrides () {
+function getUnitTestLogFormatOverrides () {
   const prefixText = '/' + process.env.SERVICE + '/src/'
   function prettifier () {
     return (obj) => {
@@ -84,7 +84,7 @@ function getLocalhostOverrides () {
   }
 }
 
-export default function makeCustomLogger (isLocalhost) {
+export default function makeCustomLogger (useUnitTestLogFormat) {
   function serializeReq (req) {
     const q = req.query
     if (req.raw) {
@@ -112,8 +112,8 @@ export default function makeCustomLogger (isLocalhost) {
     }
   }
   // on localhost, we customize the logs to optimize for console-based debugging
-  if (isLocalhost) {
-    Object.assign(options, getLocalhostOverrides())
+  if (useUnitTestLogFormat) {
+    Object.assign(options, getUnitTestLogFormatOverrides())
   }
   return pino(options)
 }

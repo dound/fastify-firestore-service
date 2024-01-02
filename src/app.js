@@ -22,7 +22,7 @@ export default async () => makeService({
   },
   logging: {
     reportErrorDetail: true, // process.env.NODE_ENV === 'localhost',
-    unittesting: true, // process.env.NODE_ENV === 'localhost',
+    useUnitTestLogFormat: true, // process.env.NODE_ENV === 'localhost',
     reportAllErrors: true // process.env.NODE_ENV !== 'prod'
   },
   swagger: {

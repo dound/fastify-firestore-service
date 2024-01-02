@@ -23,7 +23,7 @@ const COOKIE_CONFIG = {
 
 /**
  * @typedef {object} LoggingConfig
- * @property {boolean} [unittesting=false] Whether output logs to console with
+ * @property {boolean} [useUnitTestLogFormat=false] Whether output logs to console with
  *   pretty printing
  * @property {boolean} [reportAllErrors=false] Whether include all API
  *   validation errors in error logging. Recommend to keep it off for production,
@@ -33,7 +33,7 @@ const COOKIE_CONFIG = {
  *   testing.
  */
 const LOGGING_CONFIG = {
-  unittesting: false,
+  useUnitTestLogFormat: false,
   reportAllErrors: false,
   reportErrorDetail: false,
   sentryDSN: null
@@ -145,7 +145,7 @@ export default async function makeService (params = {}) {
   const app = fastify({
     ignoreTrailingSlash: true,
     disableRequestLogging: true,
-    logger: makeLogger(logging.unittesting),
+    logger: makeLogger(logging.useUnitTestLogFormat),
     genReqId: () => `${fastifyServerId}-${++requestCount}`,
     ajv: {
       customOptions: {
