@@ -1,6 +1,6 @@
 {
   "name": "@dound/fastify-firestore-service",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Web Framework using Fastify and Firestore ORM",
   "license": "Apache-2.0",
   "type": "module",
