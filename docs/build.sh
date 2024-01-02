@@ -13,3 +13,8 @@ npx jsdoc --configure jsdoc.config.json ../src/plugins `find ../src -type f -not
 
 sed -e "s/docs\\/api[.]md/libs\\/api\\/index.html/g" generated/index.html > generated/tmp
 mv generated/tmp generated/index.html
+
+gitHash=`git rev-parse HEAD`
+newLine="Generated from <a href=\"$gitHash\">$gitHash<\\/a><\\/article>"
+cat ./generated/index.html | sed -e "s/[<][/]article[>]/$newLine/g" > tmp
+mv tmp ./generated/index.html
