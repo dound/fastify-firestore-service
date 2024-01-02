@@ -6,10 +6,11 @@ import { InvalidInputException } from '../api/exception.js'
 
 export default fp(function (fastify, options, next) {
   const isLocalhost = process.env.NODE_ENV === 'localhost'
+  const sentryDSN = options.errorHandler.sentryDSN
   // istanbul ignore next
-  const isSentryEnabled = options.errorHandler.sentryDSN && !isLocalhost
+  const isSentryEnabled = sentryDSN && !isLocalhost
   Sentry.init({
-    dsn: options.errorHandler.sentryDSN,
+    dsn: sentryDSN,
     enabled: isSentryEnabled,
     environment: process.env.NODE_ENV,
     serverName: options.errorHandler.serverName
