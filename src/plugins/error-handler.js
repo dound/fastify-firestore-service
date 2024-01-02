@@ -13,6 +13,7 @@ export default fp(function (fastify, options, next) {
     dsn: sentryDSN,
     enabled: isSentryEnabled,
     environment: process.env.NODE_ENV,
+    release: process.env.GIT_HASH,
     serverName: options.errorHandler.serverName
   })
 
@@ -113,7 +114,8 @@ export default fp(function (fastify, options, next) {
       })
       scope.setExtras({
         msg: errInfo.message,
-        reqId: req.id
+        reqId: req.id,
+        userAgent: req.headers['user-agent'] ?? 'not set'
       })
       Sentry.captureException(error)
     })
